@@ -1,0 +1,49 @@
+# Scoutix
+
+> Scoutix is a B2B lead generation and CRM platform for sales teams, agencies, and freelancers. It discovers verified local business prospects from public business directories (name, phone, website, address), enriches them with email addresses, and manages the entire sales pipeline in a built-in CRM. Plans start at $39/month.
+
+## What Scoutix is
+
+Scoutix is a self-serve SaaS product. Users sign up, search a city/state/country for a business niche (e.g. "dentists in Houston", "restaurants in Austin", "contractors in Phoenix"), and within minutes receive a list of verified local businesses with their contact details. Each lead can be enriched with an email address and tracked through the built-in CRM with statuses, follow-up reminders, and notes.
+
+Scoutix is built for:
+- Freelancers and solo entrepreneurs targeting local markets
+- Marketing agencies generating leads for multiple clients
+- B2B sales teams keeping their pipeline full
+- Anyone doing local cold outreach who needs verified business data fast
+
+## Plans and pricing
+
+- **Starter — $39/month**: 800 leads/month, city-level searches, verified business data, email enrichment, built-in CRM, lead status tracking, standard generation speed. Best for freelancers and solo entrepreneurs.
+- **Growth — $69/month** (most popular): 3,000 leads/month, state-level searches, advanced CRM filters, email enrichment, follow-up reminders, CSV export, fast generation, priority queue. Best for growing teams and agencies.
+- **Pro — $149/month**: 8,000 leads/month, country-level searches, fastest generation, email enrichment, highest priority queue, early access to new features. Best for high-volume operators.
+
+Every plan includes a 30-day money-back guarantee. Visa and Mastercard accepted. No long-term contracts.
+
+## Key features
+
+- **Lead discovery**: business name, phone number, website URL, full address
+- **Geographic search**: city, state, or country depending on plan
+- **Built-in CRM**: lead statuses, notes, follow-up dates, advanced filtering
+- **CSV export** (Growth and Pro)
+- **Fast results**: leads in minutes, not days
+
+## Data sources and legality
+
+Scoutix sources publicly available business data from across the web. Users are responsible for ensuring their use of the service complies with all applicable laws and regulations in their jurisdiction.
+
+## Links
+
+- Website: https://scoutix.io
+- Sign up: https://scoutix.io/Account/SignUp
+- Pricing: https://scoutix.io/#pricing
+- Features: https://scoutix.io/#features
+- FAQ: https://scoutix.io/#faq
+- Contact: https://scoutix.io/#contact
+- Privacy Policy: https://scoutix.io/Account/PrivacyPolicy
+- Terms of Service: https://scoutix.io/Account/TermsOfService
+- Sitemap: https://scoutix.io/sitemap.xml
+- Support email: support@scoutix.io
+- LinkedIn: https://www.linkedin.com/company/scoutix/
+- Twitter: https://x.com/scoutixio
+- Instagram: https://www.instagram.com/scoutix.io

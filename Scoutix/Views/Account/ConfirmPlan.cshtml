@@ -1,0 +1,299 @@
+﻿@using System.Security.Claims
+@{
+    Layout = "_VisitorLayout";
+    ViewData["Title"] = "Choose Your Plan";
+}
+
+
+<section class="choose-plan-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <div class="plan-step-indicator">
+                <div class="step-item active">
+                    <div class="step-number">1</div>
+                    <span>Account</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item active">
+                    <div class="step-number">2</div>
+                    <span>Plan</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <span>Payment</span>
+                </div>
+            </div>
+
+            <h2 class="section-title">Choose your plan</h2>
+            <p class="section-description">
+                Start generating verified business leads today. Cancel anytime from your dashboard.
+            </p>
+            <div class="money-back-badge">
+                <i class="bi bi-shield-fill-check me-2"></i>
+                30-Day Money-Back Guarantee — Not satisfied? Full refund, no questions asked.
+            </div>
+        </div>
+
+        <div class="row pricing-grid justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card selectable @((ViewBag.PlanId ?? 0) == 1 ? "selected" : "")" data-plan="starter">
+                    <div class="pricing-header">
+                        <h3 class="pricing-plan-name">Starter</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">$</span>
+                            <span class="price-amount">39</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <p class="pricing-description">Perfect for freelancers</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> 800 leads per month</li>
+                        <li><i class="bi bi-check-circle-fill"></i> City-level searches</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Verified business data from public directories</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Built-in CRM included</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead status tracking</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Standard generation speed</li>
+                    </ul>
+                    <button class="btn-select-plan" onclick="selectPlan('starter', 39)">
+                        Select Starter
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card selectable @((ViewBag.PlanId ?? 0) == 2 ? "selected" : "") featured" data-plan="growth">
+                    <div class="popular-badge">Most Popular</div>
+
+                    <div class="pricing-header">
+                        <h3 class="pricing-plan-name">Growth</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">$</span>
+                            <span class="price-amount">69</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <p class="pricing-description">For growing teams</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> 3,000 leads per month</li>
+                        <li><i class="bi bi-check-circle-fill"></i> State-level searches</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Verified business data from public directories</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Built-in CRM included</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead status tracking</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Follow-up reminders</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Advanced CRM filters</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead export (CSV)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Fast generation speed</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Priority queue</li>
+                    </ul>
+                    <button class="btn-select-plan" onclick="selectPlan('growth', 69)">
+                        Select Growth
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card selectable @((ViewBag.PlanId ?? 0) == 3 ? "selected" : "")" data-plan="pro">
+                    <div class="pricing-header">
+                        <h3 class="pricing-plan-name">Pro</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">$</span>
+                            <span class="price-amount">149</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <p class="pricing-description">For high-volume users</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> 8,000 leads per month</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Country-level searches</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Verified business data from public directories</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Built-in CRM included</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead status tracking</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Follow-up reminders</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Advanced CRM filters</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead export (CSV)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Fastest generation speed</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Highest priority queue</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Early access to new features</li>
+                    </ul>
+                    <button class="btn-select-plan" onclick="selectPlan('pro', 149)">
+                        Select Pro
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="plan-summary-box">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h4 class="summary-title">Selected: <span id="selectedPlanName">@ViewBag.PlanName</span></h4>
+                    <p class="summary-description">
+                        <strong id="selectedPlanPrice">$@ViewBag.PlanPrice</strong>/month • Cancel anytime from your dashboard
+                    </p>
+                    <div class="summary-agreement">
+                        By continuing, you agree to our
+                        <a href="/Terms" target="_blank">Terms of Service</a>,
+                        <a href="/Privacy" target="_blank">Privacy Policy</a>, and
+                        <a href="/Refunds" target="_blank">Refund Policy</a>.
+                    </div>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <button id="paddle-checkout-button" class="btn-auth-primary mt-2">
+                        <i class="bi bi-lock-fill me-2"></i>
+                        Proceed to Secure Checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="plan-features-guarantee">
+            <div class="row text-center">
+                <div class="col-md-4">
+                    <div class="guarantee-item">
+                        <i class="bi bi-shield-check"></i>
+                        <h6>Secure Payment</h6>
+                        <p>Your payment info is encrypted and secure</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="guarantee-item">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                        <h6>30-Day Money-Back Guarantee</h6>
+                        <p>Not happy in 30 days? Full refund, no questions asked</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="guarantee-item">
+                        <i class="bi bi-headset"></i>
+                        <h6>Dedicated Support</h6>
+                        <p>We're here to help you get the most out of Scoutix</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<style>
+    /* Loading state on button */
+    .btn-auth-primary.loading {
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+        .btn-auth-primary.loading::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-left: 0.6rem;
+        }
+</style>
+
+
+@* Paddle *@
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+    // Paddle config — injected server-side, environment-aware.
+    // Development: sandbox token + sandbox price IDs (from appsettings.Development.json).
+    // Production:  live token + live price IDs (from appsettings.json).
+    const paddleConfig = {
+        token:   '@ViewBag.PaddleClientToken',
+        sandbox: @(ViewBag.PaddleIsSandbox == true ? "true" : "false"),
+        priceIds: {
+            starter: '@ViewBag.PaddleStarterPriceId',
+            growth:  '@ViewBag.PaddleGrowthPriceId',
+            pro:     '@ViewBag.PaddleProPriceId'
+        }
+    };
+
+    let selectedPlanId = '@ViewBag.PlanId';
+    let selectedPlan   = '@ViewBag.PlanName';
+    let selectedPrice  = '@ViewBag.PlanPrice';
+    let priceId        = '@ViewBag.PriceId';
+    let email          = '@ViewBag.Email';
+
+    // Function to select the plan based on user interaction or defaults
+    function selectPlan(plan, price) {
+        selectedPlan  = plan;
+        selectedPrice = price;
+
+        // Update the selected plan UI
+        document.querySelectorAll('.pricing-card.selectable').forEach(card => {
+            card.classList.remove('selected');
+            const indicator = card.querySelector('.selected-indicator');
+            if (indicator) indicator.remove();
+        });
+
+        const selectedCard = document.querySelector(`[data-plan="${plan}"]`);
+        selectedCard.classList.add('selected');
+
+        if (!selectedCard.querySelector('.selected-indicator')) {
+            const indicator = document.createElement('div');
+            indicator.className = 'selected-indicator';
+            indicator.innerHTML = '<i class="bi bi-check-circle-fill"></i> Selected';
+            selectedCard.insertBefore(indicator, selectedCard.firstChild);
+        }
+
+        // Update selected plan info on the page
+        const planNames = {
+            'starter': 'Starter Plan',
+            'growth':  'Growth Plan',
+            'pro':     'Pro Plan'
+        };
+        document.getElementById('selectedPlanName').textContent  = planNames[plan];
+        document.getElementById('selectedPlanPrice').textContent = `$${price}`;
+
+        // Price ID comes from server config — correct for current environment automatically
+        priceId = paddleConfig.priceIds[plan];
+    }
+
+    if (paddleConfig.sandbox) Paddle.Environment.set("sandbox");
+
+    Paddle.Initialize({
+        token: paddleConfig.token,
+        eventCallback: function (event) {
+            console.log('Paddle event:', event.name);
+            if (event.name === 'checkout.closed') {
+                $('#paddle-checkout-button')
+                    .removeClass('loading')
+                    .html('<i class="bi bi-lock-fill me-2"></i> Proceed to Secure Checkout');
+            }
+            if (event.name === 'checkout.completed') {
+                const transactionId = event.data.transaction_id;
+                window.location.href = '/Account/CheckoutSuccess?_ptxn=' + transactionId;
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        // Default Plan Handling (Growth plan is selected if no planId is passed)
+        if (selectedPlanId && selectedPlanId !== "0") {
+            if      (selectedPlanId === "1") selectPlan('starter', 39);
+            else if (selectedPlanId === "2") selectPlan('growth',  69);
+            else if (selectedPlanId === "3") selectPlan('pro',    149);
+        } else {
+            selectPlan('growth', 69);  // Default to Growth Plan if no planId
+        }
+
+        // Paddle Checkout Button Click Handler
+        $('#paddle-checkout-button').on('click', function () {
+            const $btn = $(this);
+            $btn.addClass('loading').html('<i class="bi bi-lock-fill me-2"></i> Opening Checkout...');
+
+            Paddle.Checkout.open({
+                settings: {
+                    displayMode: "overlay",
+                    theme: "light",
+                    locale: "en",
+                },
+                items: [{ priceId: priceId }],
+                customer:   { email: email },
+                customData: { email: email }
+            });
+        });
+    });
+</script>

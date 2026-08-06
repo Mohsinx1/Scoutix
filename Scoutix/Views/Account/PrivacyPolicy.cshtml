@@ -1,0 +1,1011 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy — Scoutix";
+    Layout = "_VisitorLayout";
+}
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #059669;
+            --accent: #F59E0B;
+            --dark: #064E3B;
+            --light-green: #ECFDF5;
+            --gold-light: #FEF3C7;
+            --text: #1C1917;
+            --text-muted: #6B7280;
+            --border: #D1FAE5;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: #FAFAF9;
+            color: var(--text);
+            line-height: 1.8
+        }
+
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 600px;
+                height: 600px;
+                background: radial-gradient(ellipse at top right, rgba(5,150,105,0.08) 0%, transparent 70%);
+                pointer-events: none;
+                z-index: 0
+            }
+
+        .topbar {
+            background: var(--dark);
+            padding: 14px 0;
+            text-align: center;
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            letter-spacing: .05em
+        }
+
+            .topbar span {
+                color: var(--accent);
+                font-weight: 500
+            }
+
+        nav {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 20px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 20px rgba(5,150,105,0.06)
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--accent), #D97706);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none
+        }
+
+            .nav-links a {
+                text-decoration: none;
+                color: var(--text-muted);
+                font-size: 14px;
+                font-weight: 500;
+                transition: color .2s
+            }
+
+                .nav-links a:hover, .nav-links a.active {
+                    color: var(--primary)
+                }
+
+        .nav-cta {
+            background: var(--primary);
+            color: #fff !important;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-weight: 500 !important;
+            transition: background .2s !important
+        }
+
+            .nav-cta:hover {
+                background: var(--dark) !important
+            }
+
+        .page-hero {
+            background: linear-gradient(135deg, var(--dark) 0%, #065F46 60%, #047857 100%);
+            padding: 80px 60px 100px;
+            position: relative;
+            overflow: hidden
+        }
+
+            .page-hero::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -20%;
+                width: 500px;
+                height: 500px;
+                background: radial-gradient(circle, rgba(245,158,11,0.15) 0%, transparent 60%)
+            }
+
+            .page-hero::after {
+                content: '';
+                position: absolute;
+                bottom: -20px;
+                right: -20px;
+                width: 300px;
+                height: 300px;
+                background: radial-gradient(circle, rgba(5,150,105,0.3) 0%, transparent 70%)
+            }
+
+        .hero-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1
+        }
+
+        .page-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(245,158,11,0.2);
+            border: 1px solid rgba(245,158,11,0.4);
+            color: var(--accent);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            margin-bottom: 24px
+        }
+
+        .page-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(36px, 5vw, 56px);
+            color: #fff;
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 20px
+        }
+
+            .page-hero h1 em {
+                font-style: normal;
+                color: var(--accent)
+            }
+
+        .page-hero p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin-bottom: 36px
+        }
+
+        .meta-row {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px
+        }
+
+            .meta-item .dot {
+                width: 6px;
+                height: 6px;
+                background: var(--accent);
+                border-radius: 50%
+            }
+
+        .content-wrapper {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 60px 100px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 60px;
+            align-items: start
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 80px
+        }
+
+        .sidebar-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 4px 24px rgba(5,150,105,0.06)
+        }
+
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px
+        }
+
+        .toc-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 4px
+        }
+
+            .toc-list a {
+                text-decoration: none;
+                color: var(--text-muted);
+                font-size: 13.5px;
+                padding: 7px 12px;
+                border-radius: 8px;
+                display: block;
+                transition: all .2s;
+                border-left: 2px solid transparent
+            }
+
+                .toc-list a:hover {
+                    color: var(--primary);
+                    background: var(--light-green);
+                    border-left-color: var(--primary);
+                    padding-left: 16px
+                }
+
+        .sidebar-support {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border)
+        }
+
+            .sidebar-support p {
+                font-size: 13px;
+                color: var(--text-muted);
+                margin-bottom: 12px
+            }
+
+        .support-btn {
+            display: block;
+            background: var(--light-green);
+            color: var(--primary);
+            text-decoration: none;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all .2s
+        }
+
+            .support-btn:hover {
+                background: var(--primary);
+                color: #fff
+            }
+
+        .main-content {
+            min-width: 0
+        }
+
+        .intro-card {
+            background: var(--gold-light);
+            border: 1px solid rgba(245,158,11,0.3);
+            border-radius: 16px;
+            padding: 28px 32px;
+            margin-bottom: 48px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start
+        }
+
+        .intro-card-icon {
+            font-size: 24px;
+            flex-shrink: 0
+        }
+
+        .intro-card p {
+            font-size: 15px;
+            color: #78350F;
+            line-height: 1.7
+        }
+
+            .intro-card p strong {
+                color: #92400E
+            }
+
+        section.policy-section {
+            margin-bottom: 56px;
+            scroll-margin-top: 100px
+        }
+
+        .section-number {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            margin-bottom: 8px
+        }
+
+        .policy-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border)
+        }
+
+        .policy-section p {
+            font-size: 15.5px;
+            color: #374151;
+            margin-bottom: 16px;
+            line-height: 1.85
+        }
+
+        .policy-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            color: var(--dark);
+            margin: 28px 0 12px;
+            font-weight: 600
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0
+        }
+
+        .data-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            border-top: 3px solid var(--primary)
+        }
+
+            .data-card h4 {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--dark);
+                margin-bottom: 10px
+            }
+
+            .data-card ul {
+                list-style: none;
+                font-size: 13.5px;
+                color: var(--text-muted);
+                line-height: 1.9
+            }
+
+                .data-card ul li::before {
+                    content: '›';
+                    color: var(--primary);
+                    font-weight: 700;
+                    margin-right: 6px
+                }
+
+        .highlight-box {
+            background: var(--light-green);
+            border-left: 4px solid var(--primary);
+            border-radius: 0 12px 12px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+            font-size: 15px;
+            color: #065F46
+        }
+
+        .info-box {
+            background: #EFF6FF;
+            border-left: 4px solid #3B82F6;
+            border-radius: 0 12px 12px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+            font-size: 15px;
+            color: #1E3A5F
+        }
+
+        .gold-box {
+            background: var(--gold-light);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 12px 12px 0;
+            padding: 20px 24px;
+            margin: 24px 0;
+            font-size: 15px;
+            color: #78350F
+        }
+
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 20px 0
+        }
+
+        .right-item {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center
+        }
+
+            .right-item .right-icon {
+                font-size: 24px;
+                margin-bottom: 8px
+            }
+
+            .right-item h4 {
+                font-size: 13px;
+                font-weight: 600;
+                color: var(--dark);
+                margin-bottom: 4px
+            }
+
+            .right-item p {
+                font-size: 12px;
+                color: var(--text-muted);
+                line-height: 1.5;
+                margin: 0
+            }
+
+        .jurisdiction-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin: 20px 0
+        }
+
+        .jurisdiction-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+            .jurisdiction-card.eu {
+                border-top: 3px solid #3B82F6
+            }
+
+            .jurisdiction-card.ca {
+                border-top: 3px solid #F59E0B
+            }
+
+            .jurisdiction-card h4 {
+                font-size: 14px;
+                font-weight: 700;
+                color: var(--dark);
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                gap: 8px
+            }
+
+            .jurisdiction-card p {
+                font-size: 13.5px;
+                color: var(--text-muted);
+                line-height: 1.75;
+                margin-bottom: 8px
+            }
+
+                .jurisdiction-card p:last-child {
+                    margin-bottom: 0
+                }
+
+        .contact-card {
+            background: linear-gradient(135deg, var(--dark), #065F46);
+            border-radius: 16px;
+            padding: 36px;
+            color: #fff;
+            margin-top: 20px
+        }
+
+            .contact-card h3 {
+                font-family: 'Playfair Display', serif;
+                font-size: 22px;
+                margin-bottom: 12px;
+                color: #fff
+            }
+
+            .contact-card p {
+                color: rgba(255,255,255,0.7);
+                font-size: 15px;
+                margin-bottom: 20px
+            }
+
+        .contact-methods {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap
+        }
+
+        .contact-method {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            padding: 12px 18px;
+            font-size: 14px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+            .contact-method span {
+                color: var(--accent)
+            }
+
+        footer {
+            background: var(--dark);
+            padding: 40px 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px
+        }
+
+            footer p {
+                color: rgba(255,255,255,0.5);
+                font-size: 13px
+            }
+
+        .footer-links {
+            display: flex;
+            gap: 24px
+        }
+
+            .footer-links a {
+                color: rgba(255,255,255,0.5);
+                text-decoration: none;
+                font-size: 13px;
+                transition: color .2s
+            }
+
+                .footer-links a:hover {
+                    color: var(--accent)
+                }
+
+                .footer-links a.active-page {
+                    color: var(--accent);
+                    font-weight: 500
+                }
+
+        @@keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px)
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .hero-inner > * {
+            animation: fadeUp .6s ease forwards;
+            opacity: 0
+        }
+
+            .hero-inner > *:nth-child(1) {
+                animation-delay: .1s
+            }
+
+            .hero-inner > *:nth-child(2) {
+                animation-delay: .2s
+            }
+
+            .hero-inner > *:nth-child(3) {
+                animation-delay: .3s
+            }
+
+            .hero-inner > *:nth-child(4) {
+                animation-delay: .4s
+            }
+
+        @@media (max-width: 900px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+                padding: 40px 24px 80px
+            }
+
+            .sidebar {
+                position: static
+            }
+
+            nav {
+                padding: 16px 24px
+            }
+
+            .nav-links {
+                display: none
+            }
+
+            .page-hero {
+                padding: 60px 24px 80px
+            }
+
+            .data-grid, .rights-grid, .jurisdiction-grid {
+                grid-template-columns: 1fr
+            }
+
+            footer {
+                padding: 30px 24px
+            }
+        }
+    </style>
+
+
+    <div class="topbar">
+        🔒 Your data is handled with care — Scoutix is committed to your privacy
+    </div>
+
+ 
+
+    <div class="page-hero">
+        <div class="hero-inner">
+            <div class="page-badge">🔒 Privacy &amp; Data</div>
+            <h1>Privacy <em>Policy</em></h1>
+            <p>Scoutix is built on trust. This policy explains exactly what data we collect, how we use it, and the rights you have — wherever you are in the world.</p>
+            <div class="meta-row">
+            <div class="meta-item"><div class="dot"></div> Effective Date: March 18, 2026</div>
+            <div class="meta-item"><div class="dot"></div> Last Updated: March 18, 2026</div>
+                <div class="meta-item"><div class="dot"></div> Operated by Muhammad Mohsin Shabbir · Islamabad, Pakistan</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-card">
+                <div class="sidebar-title">On this page</div>
+                <ul class="toc-list">
+                    <li><a href="#overview">1. Overview &amp; Data Controller</a></li>
+                    <li><a href="#information-we-collect">2. Information We Collect</a></li>
+                    <li><a href="#how-we-use">3. How We Use Information</a></li>
+                    <li><a href="#data-sources">4. Data Sources</a></li>
+                    <li><a href="#storage-security">5. Storage &amp; Security</a></li>
+                    <li><a href="#third-party">6. Third-Party Services</a></li>
+                    <li><a href="#international-transfers">7. International Transfers</a></li>
+                    <li><a href="#user-rights">8. Your Rights</a></li>
+                    <li><a href="#eu-uk-rights">9. EU / UK Supervisory Authority</a></li>
+                    <li><a href="#california-rights">10. California Residents (CCPA/CPRA)</a></li>
+                    <li><a href="#data-retention">11. Data Retention &amp; Backups</a></li>
+                    <li><a href="#cookies">12. Cookies &amp; Tracking</a></li>
+                    <li><a href="#do-not-track">13. Do Not Track</a></li>
+                    <li><a href="#third-party-accuracy">14. Third-Party Data Accuracy</a></li>
+                    <li><a href="#children">15. Children's Privacy</a></li>
+                    <li><a href="#compliance">16. Compliance Statement</a></li>
+                    <li><a href="#policy-changes">17. Changes to This Policy</a></li>
+                    <li><a href="#contact">18. Contact</a></li>
+                </ul>
+                <div class="sidebar-support">
+                    <p>Privacy questions?</p>
+                    <a href="mailto:support@scoutix.io" class="support-btn">✉ Contact Us</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <div class="intro-card">
+                <div class="intro-card-icon">📋</div>
+                <p><strong>Summary:</strong> Scoutix is operated by Muhammad Mohsin Shabbir, a sole proprietor based in Islamabad, Pakistan. We collect your account, billing, and usage data to run our lead generation platform. We aggregate publicly available business information from online sources. We do not sell your personal data. You may contact <strong>support@scoutix.io</strong> at any time to exercise your data rights.</p>
+            </div>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="overview">
+                <div class="section-number">Section 01</div>
+                <h2>Overview &amp; Data Controller</h2>
+                <p>This Privacy Policy describes how Scoutix ("Scoutix," "we," "us," or "our") collects, uses, stores, and protects personal information obtained through the Scoutix platform and website (collectively, the "Service").</p>
+
+                <div class="info-box">
+                    <strong>Data Controller:</strong> Muhammad Mohsin Shabbir<br>
+                    Operating under the trading name: <strong>Scoutix</strong><br>
+                    Address: Islamabad, Pakistan<br>
+                    Contact: support@scoutix.io<br><br>
+                    Scoutix is operated as a sole proprietorship. There is no registered company entity at this time. Muhammad Mohsin Shabbir is personally responsible for data handling practices described in this policy.
+                </div>
+
+                <p><strong>Role Clarification:</strong> Muhammad Mohsin Shabbir / Scoutix acts as a <em>data controller</em> for personal data collected directly from users (account, billing, and usage data). For publicly available business contact data that users search and export through the platform, Scoutix functions as a data processing tool only — the user assumes full responsibility for how that exported data is subsequently used.</p>
+                <p>By creating an account or using the Service, you agree to the practices described in this Privacy Policy. If you do not agree, please discontinue use of the Service.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="information-we-collect">
+                <div class="section-number">Section 02</div>
+                <h2>Information We Collect</h2>
+                <p>We collect information you provide directly, information generated automatically through your use of the Service, and publicly available business data that our platform aggregates from online sources.</p>
+                <div class="data-grid">
+                    <div class="data-card">
+                        <h4>👤 Account Information</h4>
+                        <ul>
+                            <li>Full name</li>
+                            <li>Email address</li>
+                            <li>Password (hashed — never stored in plain text)</li>
+                            <li>Account creation date</li>
+                            <li>Subscription plan</li>
+                        </ul>
+                    </div>
+                    <div class="data-card">
+                        <h4>💳 Billing Information</h4>
+                        <ul>
+                            <li>Subscription tier selected</li>
+                            <li>Transaction records and receipts</li>
+                            <li>Billing country / region</li>
+                            <li>Payment method type (card brand only)</li>
+                            <li>Card details handled exclusively by Paddle — we do not store card numbers</li>
+                        </ul>
+                    </div>
+                    <div class="data-card">
+                        <h4>📊 Usage &amp; Activity Data</h4>
+                        <ul>
+                            <li>Search queries and filters used</li>
+                            <li>Features and tools accessed</li>
+                            <li>Export history and volume</li>
+                            <li>Session timestamps and duration</li>
+                            <li>Platform interactions and clicks</li>
+                        </ul>
+                    </div>
+                    <div class="data-card">
+                        <h4>🖥 Technical &amp; Device Data</h4>
+                        <ul>
+                            <li>IP address</li>
+                            <li>Browser type and version</li>
+                            <li>Operating system</li>
+                            <li>Referring URL</li>
+                            <li>Approximate location (derived from IP)</li>
+                            <li>Device identifiers</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="how-we-use">
+                <div class="section-number">Section 03</div>
+                <h2>How We Use Your Information</h2>
+
+                <h3>Service Delivery</h3>
+                <p>We use your account and usage data to authenticate your sessions, process lead generation queries, generate results, and enable data export functionality. This processing is necessary to fulfil our contractual obligations to you as a subscriber.</p>
+
+                <h3>Billing &amp; Subscription Management</h3>
+                <p>Billing data is used to process subscription payments, issue invoices, manage plan changes, handle cancellations, and prevent fraudulent transactions. Payment processing is handled entirely by Paddle; we receive only transaction confirmation and subscription status data.</p>
+
+                <h3>Service Improvement</h3>
+                <p>Aggregated and anonymized usage data helps us identify performance issues, understand feature adoption, and improve the platform experience. We do not use individual-level data for product analytics without consent.</p>
+
+                <h3>Communication</h3>
+                <p>We send transactional emails including account confirmations, subscription receipts, password resets, and service notifications. Where you have opted in, we may also send product updates or promotional communications. You may unsubscribe from marketing emails at any time using the unsubscribe link in those emails.</p>
+
+                <h3>Fraud Prevention &amp; Security</h3>
+                <p>IP addresses and usage patterns are monitored to detect and prevent unauthorized access, platform abuse, and fraudulent activity, based on our legitimate interest in maintaining a secure and reliable service.</p>
+
+                <h3>Legal Basis for Processing (GDPR — EEA / UK Users)</h3>
+                <p>For users in the European Economic Area (EEA) or United Kingdom, we process personal data on the following legal bases:</p>
+                <p><strong>Contractual Necessity (Article 6(1)(b)):</strong> Account registration data, login credentials, and billing information are processed to perform our contract with you and deliver the Service.</p>
+                <p><strong>Legitimate Interest (Article 6(1)(f)):</strong> Security monitoring, fraud prevention, and aggregate analytics are processed on the basis of our legitimate interest in operating a safe and functional platform, balanced against your privacy rights.</p>
+                <p><strong>Consent (Article 6(1)(a)):</strong> Where you have opted in to receive marketing communications, we process your email on the basis of your freely given consent. You may withdraw consent at any time by using the unsubscribe link in any marketing email.</p>
+
+                <h3>Lawful Basis for Publicly Available Business Data Aggregation</h3>
+                <p>The business information surfaced through Scoutix (names, addresses, phone numbers, categories, ratings) is sourced from publicly accessible online directories. This data relates to businesses as commercial entities, not to private individuals in their personal capacity. Our processing of such publicly available business data to provide search and export functionality to subscribers is based on our legitimate interest in delivering the agreed service, and is consistent with the reasonable expectations of both users and the businesses whose public-facing contact details appear in public directories.</p>
+                <p>Scoutix does not process special category personal data and does not use publicly available data to build profiles of private individuals.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="data-sources">
+                <div class="section-number">Section 04</div>
+                <h2>Data Sources — Publicly Available Business Information</h2>
+                <p>The core functionality of Scoutix involves aggregating publicly available business information from online directories and mapping services. The types of business data our platform surfaces include:</p>
+                <div class="highlight-box">
+                    🏢 Business names · Physical addresses · Phone numbers · Business websites · Business categories · Operational hours · Public ratings and review counts
+                </div>
+                <p>This information is publicly accessible on the open internet and relates primarily to businesses and commercial entities. Scoutix does not claim ownership of this third-party data. Users are solely responsible for ensuring their use of exported business data complies with all applicable laws in their jurisdiction and in the jurisdictions they target, including anti-spam regulations, telemarketing laws, and local data protection requirements.</p>
+                <p>Scoutix does not guarantee the accuracy, completeness, or current validity of publicly sourced business data, as such information is subject to change by the original source at any time.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="storage-security">
+                <div class="section-number">Section 05</div>
+                <h2>Data Storage &amp; Security</h2>
+                <p>Your account data, billing records, and usage data are stored on secure cloud infrastructure maintained by reputable third-party hosting providers. We implement the following security practices:</p>
+                <div class="highlight-box">
+                    🔐 Encrypted data transmission (HTTPS / TLS) · Password hashing using industry-standard algorithms · Role-based access controls · Secure session management · Regular security reviews and monitoring
+                </div>
+                <p>While we apply reasonable and appropriate technical measures to protect your data, no system can be guaranteed 100% secure. In the event of a data breach that poses a material risk to your rights, we will notify affected users in a timely manner consistent with applicable law.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="third-party">
+                <div class="section-number">Section 06</div>
+                <h2>Third-Party Services</h2>
+                <p>Scoutix uses the following categories of third-party service providers to operate the platform. Each provider processes data under their own privacy policies and applicable data processing agreements.</p>
+
+                <h3>Cloud Hosting Providers</h3>
+                <p>We use cloud infrastructure providers to host our application servers, databases, and static assets. These providers may process data in data centers located in various countries.</p>
+
+                <h3>Payment Processing — Paddle</h3>
+                <p>Subscription billing is managed by Paddle (paddle.com), a third-party Merchant of Record. Paddle processes payment card data and issues invoices on our behalf. Your financial data is subject to Paddle's Privacy Policy. We do not store or have direct access to your full payment card details. Refunds are handled in accordance with our Terms of Service and Paddle's applicable payment terms.</p>
+
+                <h3>Email Delivery</h3>
+                <p>We use a third-party transactional email provider to deliver account notifications, receipts, and communications. Email providers may process your email address and delivery metadata.</p>
+
+                <h3>Analytics</h3>
+                <p>We may use analytics tools to understand aggregate platform usage. Where used, these tools are configured to operate on anonymized or pseudonymized data. We do not enable cross-site behavioral tracking or sell user data to advertisers.</p>
+
+                <h3>Infrastructure &amp; Automation Services</h3>
+                <p>To deliver our data aggregation functionality, Scoutix uses server-side cloud infrastructure including proxy routing services and automation components. These tools are used to facilitate user-requested data queries across publicly available online sources on behalf of users. No personal data of our users is shared with these infrastructure providers beyond what is technically necessary to route and process requests.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="international-transfers">
+                <div class="section-number">Section 07</div>
+                <h2>International Data Transfers</h2>
+                <p>Scoutix is operated from Islamabad, Pakistan and serves users across multiple countries. Your data may be processed in countries other than your country of residence, including countries where data protection laws may differ from those in your jurisdiction.</p>
+                <p>When processing data from users in the European Economic Area (EEA) or United Kingdom, international transfers are carried out where necessary for the performance of our contract with you and subject to appropriate safeguards consistent with applicable data protection laws. By using the Service, you acknowledge that your data may be transferred to and processed in Pakistan and other jurisdictions where our service providers operate. Users requiring a Data Processing Agreement (DPA) may contact us at support@scoutix.io.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="user-rights">
+                <div class="section-number">Section 08</div>
+                <h2>Your Rights</h2>
+                <p>Regardless of your location, Scoutix respects your right to control your personal information. You may exercise the following rights by contacting us at <strong>support@scoutix.io</strong>:</p>
+                <div class="rights-grid">
+                    <div class="right-item"><div class="right-icon">👁</div><h4>Access</h4><p>Request a copy of the personal data we hold about you</p></div>
+                    <div class="right-item"><div class="right-icon">✏️</div><h4>Correction</h4><p>Request correction of inaccurate or incomplete data</p></div>
+                    <div class="right-item"><div class="right-icon">🗑</div><h4>Deletion</h4><p>Request deletion of your account and personal data</p></div>
+                    <div class="right-item"><div class="right-icon">📦</div><h4>Portability</h4><p>Request a machine-readable export of your account data</p></div>
+                    <div class="right-item"><div class="right-icon">🚫</div><h4>Opt-Out</h4><p>Unsubscribe from marketing communications at any time</p></div>
+                    <div class="right-item"><div class="right-icon">⚖️</div><h4>Object</h4><p>Object to processing where legitimate interest is the legal basis</p></div>
+                </div>
+                <p>We will respond to verified requests within <strong>30 days</strong>. Identity verification may be required before processing certain requests. We will not discriminate against you for exercising any of these rights.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="eu-uk-rights">
+                <div class="section-number">Section 09</div>
+                <h2>EU / UK Users — Supervisory Authority Complaint</h2>
+                <p>If you are located in the European Economic Area (EEA) or United Kingdom and believe that we have not handled your personal data in accordance with applicable data protection law, you have the right to lodge a complaint with your local data protection supervisory authority.</p>
+                <div class="info-box">
+                    <strong>We encourage you to contact us first</strong> at support@scoutix.io so we can try to resolve your concern directly. We aim to respond to all privacy inquiries within 30 days.<br><br>
+                    If you are not satisfied with our response, you may contact the supervisory authority in your EEA member state or, for UK residents, the <strong>Information Commissioner's Office (ICO)</strong> at <strong>ico.org.uk</strong>.
+                </div>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="california-rights">
+                <div class="section-number">Section 10</div>
+                <h2>California Residents — CCPA / CPRA Rights</h2>
+                <p>If you are a California resident, the California Consumer Privacy Act (CCPA) as amended by the California Privacy Rights Act (CPRA) may provide you with additional rights regarding your personal information.</p>
+
+                <div class="jurisdiction-grid">
+                    <div class="jurisdiction-card ca">
+                        <h4>🏛 Your California Rights</h4>
+                        <p><strong>Know:</strong> Request disclosure of the categories and specific pieces of personal information we have collected about you.</p>
+                        <p><strong>Delete:</strong> Request deletion of your personal information, subject to certain exceptions.</p>
+                        <p><strong>Correct:</strong> Request correction of inaccurate personal information.</p>
+                        <p><strong>Opt-Out of Sale:</strong> Scoutix does not sell personal information. We do not sell or share your data with third parties for cross-context behavioral advertising.</p>
+                        <p><strong>Non-Discrimination:</strong> We will not discriminate against you for exercising any CCPA rights.</p>
+                    </div>
+                    <div class="jurisdiction-card eu">
+                        <h4>📋 How to Submit a Request</h4>
+                        <p>To exercise any California privacy rights, contact us at:</p>
+                        <p><strong>Email:</strong> support@scoutix.io</p>
+                        <p><strong>Subject line:</strong> "CCPA Privacy Request"</p>
+                        <p>We will verify your identity before processing your request and will respond within <strong>45 days</strong> as permitted under CCPA. We may extend this period by an additional 45 days when reasonably necessary with prior notice.</p>
+                    </div>
+                </div>
+
+                <p>In the preceding 12 months, Scoutix has collected the categories of personal information described in Section 2 of this policy (account, billing, usage, and technical data). We have not sold personal information and do not intend to.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="data-retention">
+                <div class="section-number">Section 11</div>
+                <h2>Data Retention &amp; Backups</h2>
+                <p>We retain your personal data for as long as your account remains active and for a reasonable period thereafter to fulfil the purposes outlined in this policy.</p>
+
+                <h3>Active Account Data</h3>
+                <p>Account data, usage logs, and associated records are retained for the duration of your active subscription and for <strong>30 days</strong> following account cancellation, to allow for reactivation or dispute resolution. After this period, your personal data is permanently deleted from active production systems.</p>
+
+                <h3>Billing &amp; Financial Records</h3>
+                <p>Transaction records, invoice history, and billing data may be retained for up to <strong>7 years</strong> from the date of transaction to comply with financial recordkeeping obligations and tax regulations applicable in Pakistan and other relevant jurisdictions.</p>
+
+                <h3>Backup &amp; Archival Systems</h3>
+                <p>Our cloud infrastructure providers maintain automated backup systems for disaster recovery purposes. Personal data deleted from active systems may persist in encrypted backup archives for an additional period of up to <strong>90 days</strong> before being overwritten or permanently purged during routine backup rotation cycles. We do not use backup archives to restore or reactivate deleted accounts.</p>
+
+                <h3>Anonymized Data</h3>
+                <p>Aggregated, anonymized usage statistics and analytics data — which cannot reasonably be used to identify any individual — may be retained indefinitely for platform improvement purposes.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="cookies">
+                <div class="section-number">Section 12</div>
+                <h2>Cookies &amp; Tracking Technologies</h2>
+                <p>Scoutix uses cookies and similar technologies to operate the Service. We use three categories:</p>
+                <p><strong>Essential Cookies:</strong> Required for authentication, session management, and core platform functionality. These cannot be disabled without impacting your ability to use the Service.</p>
+                <p><strong>Functional Cookies:</strong> Remember your preferences such as language settings and UI configuration between sessions.</p>
+                <p><strong>Analytics Cookies:</strong> Collect aggregated, anonymized data about how the platform is used to help us improve the Service. You may opt out of analytics cookies through your browser settings or account preferences without affecting core functionality.</p>
+                <p>We do not use advertising cookies. We do not allow third-party advertisers to place cookies through our platform.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="do-not-track">
+                <div class="section-number">Section 13</div>
+                <h2>Do Not Track Signals</h2>
+                <p>Some browsers include a "Do Not Track" (DNT) feature that signals to websites that you prefer your browsing activity not be tracked. Scoutix does not currently respond to browser Do Not Track signals, as there is no consistent or legally binding industry standard for how such signals should be interpreted or honoured.</p>
+                <p>We do not engage in cross-site behavioral tracking or share user data with advertising networks. If you wish to limit tracking, you may configure cookie preferences through your browser settings or opt out of analytics cookies through your Scoutix account settings.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="third-party-accuracy">
+                <div class="section-number">Section 14</div>
+                <h2>Limitation of Liability — Third-Party Data Accuracy</h2>
+                <p>The business information surfaced through Scoutix's platform is sourced from publicly available online directories and listings. Scoutix makes no representations or warranties regarding the accuracy, completeness, timeliness, or fitness for any particular purpose of such third-party data.</p>
+                <p>Business contact details, addresses, operating hours, and other information may be outdated, incomplete, or inaccurate. Users are solely responsible for verifying any business data before using it for outreach, marketing, or any other commercial purpose. Scoutix shall not be liable for any losses, claims, or damages arising from reliance on third-party business data obtained through the platform.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="children">
+                <div class="section-number">Section 15</div>
+                <h2>Children's Privacy</h2>
+                <p>Scoutix is a B2B platform intended exclusively for individuals who are at least <strong>18 years of age</strong>. Our Service is not directed at, and we do not knowingly collect personal data from, individuals under the age of 18.</p>
+                <p>If we become aware that a minor has created an account or provided personal data to us without verified parental consent, we will take immediate steps to delete that information and terminate the associated account. If you believe a minor has submitted personal data through our platform, please contact us immediately at <strong>support@scoutix.io</strong>.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="compliance">
+                <div class="section-number">Section 16</div>
+                <h2>Compliance Statement</h2>
+                <p>Scoutix designs its data handling practices to align with internationally recognized privacy principles, including principles consistent with the General Data Protection Regulation (GDPR), the California Consumer Privacy Act (CCPA/CPRA), and the Prevention of Electronic Crimes Act (PECA) of Pakistan — including data minimization, purpose limitation, transparency and storage limitation.</p>
+                <p>Scoutix does not claim formal regulatory certification or registration with any supervisory authority. This policy represents a good-faith effort by Muhammad Mohsin Shabbir to operate the Service in a legally responsible manner. Users in regulated jurisdictions with specific compliance inquiries are encouraged to contact support@scoutix.io.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="policy-changes">
+                <div class="section-number">Section 17</div>
+                <h2>Changes to This Policy</h2>
+                <p>Scoutix may update this Privacy Policy from time to time to reflect changes in our practices, technology, legal obligations, or business operations. When we make material changes, we will notify you by sending an email to the address associated with your account and/or by posting a prominent notice on our website at least <strong>14 days</strong> before the changes take effect.</p>
+                <p>Your continued use of the Service after the effective date of an updated Privacy Policy constitutes your acceptance of the revised policy. If you do not agree to the updated policy, you must discontinue use of the Service before the effective date. All previous versions of this policy are archived and available upon request by emailing support@scoutix.io.</p>
+            </section>
+
+            <!-- ═══════════════════════════════════════════════════════ -->
+            <section class="policy-section" id="contact">
+                <div class="section-number">Section 18</div>
+                <h2>Contact</h2>
+                <div class="contact-card">
+                    <h3>Privacy Inquiries</h3>
+                    <p>For any questions, requests, or concerns regarding this Privacy Policy or your personal data, please reach out directly. We aim to respond within 3–5 business days.</p>
+                    <div class="contact-methods">
+                        <div class="contact-method">👤 <span>Muhammad Mohsin Shabbir</span></div>
+                        <div class="contact-method">✉ <span>support@scoutix.io</span></div>
+                        <div class="contact-method">📍 <span>Islamabad, Pakistan</span></div>
+                        <div class="contact-method">⏱ <span>Response: 3–5 business days</span></div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>

@@ -1,0 +1,735 @@
+﻿@{
+    Layout = "_VisitorLayout";
+}
+
+@section Styles {
+    @* FAQPage structured data — mirrors the FAQ section below.
+       Lets AI assistants (ChatGPT, Claude, Perplexity, Gemini) and Google
+       answer questions about Scoutix using the company's own answers. *@
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@@type": "Question",
+          "name": "What data do I get for each lead?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "You'll get business name, phone number, website URL, and full address for each lead sourced from publicly available business data online."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "How fast is the lead generation process?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Lead generation starts instantly. Depending on your plan, you can collect 50-500 leads per search in minutes."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "What happens if I don't use all my monthly leads?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Unused leads expire at the end of each month. Your quota resets on your billing date."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "Can I cancel my subscription anytime?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Yes! You can cancel from the billing portal at any time. No long-term contracts or cancellation fees."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "Do you offer refunds?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Yes — we offer a 30-day money-back guarantee for first-time subscribers. If you're not satisfied for any reason, email support@@scoutix.io with the subject 'Refund Request' within 30 days of your purchase and we'll refund you in full, no questions asked."
+          }
+        },
+        {
+          "@@type": "Question",
+          "name": "Is the data collection legal?",
+          "acceptedAnswer": {
+            "@@type": "Answer",
+            "text": "Scoutix sources publicly available business data from across the web. However, users are responsible for ensuring their use of the service complies with all applicable laws and regulations in their jurisdiction. Please review our Terms of Service for full details."
+          }
+        }
+      ]
+    }
+    </script>
+}
+
+<!-- Hero Section -->
+<section id="hero" class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                        <span>Lead intelligence built for closers</span>
+                    </div>
+                    <h1 class="hero-title">
+                        Turn any market into a pipeline of qualified leads
+                    </h1>
+                    <p class="hero-description">
+                        Scoutix is a lead intelligence platform that discovers verified local businesses, enriches them with contact data, and lets you manage every prospect in a built-in CRM — all in one place.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="/Account/SignUp" class="btn-hero-primary">
+                            Get Started
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </a>
+                        <a href="#how-it-works" class="btn-hero-secondary">
+                            See How It Works
+                        </a>
+                    </div>
+                    <div class="hero-trust">
+                        <p class="trust-text">Starting at just $39/month • Visa & Mastercard accepted</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="hero-visual">
+                    <div class="dashboard-mockup">
+                        <div class="mockup-card primary-card">
+                            <div class="card-header">
+                                <div class="header-dot"></div>
+                                <div class="header-line"></div>
+                            </div>
+                            <div class="card-content">
+                                <div class="stat-item">
+                                    <span class="stat-label">Prospects Discovered This Month</span>
+                                    <span class="stat-value">2,847</span>
+                                    <span class="stat-change positive">↑ 847 this week</span>
+                                </div>
+                                <div class="mini-chart"></div>
+                            </div>
+                        </div>
+                        <div class="mockup-card secondary-card">
+                            <div class="notification-item">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span>200 new leads found</span>
+                            </div>
+                        </div>
+                        <div class="floating-badge badge-1">
+                            <i class="bi bi-database-fill"></i>
+                            <span>Fresh Leads</span>
+                        </div>
+                        <div class="floating-badge badge-2">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                            <span>Ready in Minutes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 col-6">
+                <div class="stat-block">
+                    <h3 class="stat-number">8,000</h3>
+                    <p class="stat-label">Prospects Per Month (Pro)</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-block">
+                    <h3 class="stat-number">$39</h3>
+                    <p class="stat-label">Starting Price</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-block">
+                    <h3 class="stat-number">Minutes</h3>
+                    <p class="stat-label">From Search to Pipeline</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-block">
+                    <h3 class="stat-number">CRM</h3>
+                    <p class="stat-label">Built-in, No Extra Cost</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">FEATURES</span>
+            <h2 class="section-title">A complete lead intelligence platform</h2>
+            <p class="section-description">
+                From prospect discovery to closed deal — Scoutix gives you every tool you need in one platform.
+            </p>
+        </div>
+
+        <div class="row features-grid">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon green">
+                            <i class="bi bi-search"></i>
+                        </div>
+                    </div>
+                    <h4 class="feature-title">Prospect Discovery</h4>
+                    <p class="feature-description">
+                        Search any city, region, or industry and instantly surface verified local businesses — complete with name, phone, website, and address.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon dark">
+                            <i class="bi bi-lightning-charge-fill"></i>
+                        </div>
+                    </div>
+                    <h4 class="feature-title">Real-Time Intelligence</h4>
+                    <p class="feature-description">
+                        No waiting, no exports. Prospects populate your pipeline in real-time the moment you run a search. Up to 500 per run on Pro.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon green">
+                            <i class="bi bi-kanban"></i>
+                        </div>
+                    </div>
+                    <h4 class="feature-title">Built-in CRM</h4>
+                    <p class="feature-description">
+                        Manage your leads with status tracking, notes, follow-up dates, and filters. Keep everything organized in one place.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon dark">
+                            <i class="bi bi-funnel-fill"></i>
+                        </div>
+                    </div>
+                    <h4 class="feature-title">Smart Filters</h4>
+                    <p class="feature-description">
+                        Filter leads by status, city, niche, and date. Sort and search to find exactly who you need to contact next.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon green">
+                            <i class="bi bi-calendar-check"></i>
+                        </div>
+                    </div>
+                    <h4 class="feature-title">Follow-Up Reminders</h4>
+                    <p class="feature-description">
+                        Never miss a follow-up. Set next contact dates and get reminders on your dashboard to stay on top of prospects.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <div class="feature-icon dark">
+                            <i class="bi bi-card-checklist"></i>
+                        </div>
+                    </div>
+                    <h4 class="feature-title">Lead Notes & History</h4>
+                    <p class="feature-description">
+                        Add notes to every lead, track conversation history, and keep your team aligned on every prospect's status.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="how-it-works-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">HOW IT WORKS</span>
+            <h2 class="section-title">From market to pipeline in 3 steps</h2>
+        </div>
+
+        <div class="row steps-grid">
+            <div class="col-lg-4">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <h4 class="step-title">Define Your Market</h4>
+                    <p class="step-description">
+                        Pick an industry and location — "dentists in Chicago" or "marketing agencies in London." Set your volume and go.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <h4 class="step-title">Scoutix Finds Your Prospects</h4>
+                    <p class="step-description">
+                        Our intelligence engine discovers verified businesses and streams them straight into your pipeline — with full contact details, in minutes.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <h4 class="step-title">Manage & Close</h4>
+                    <p class="step-description">
+                        Track every prospect in the built-in CRM — add notes, set follow-up dates, update statuses, and move deals forward without switching tools.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Use Cases Section -->
+<section class="use-cases-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">WHO IT'S FOR</span>
+            <h2 class="section-title">Built for teams that sell</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="bi bi-briefcase-fill"></i>
+                    </div>
+                    <h4 class="use-case-title">Freelancers & Consultants</h4>
+                    <p class="use-case-description">
+                        Stop cold-calling random directories. Find businesses in your city that actually need your service and reach out with confidence.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="bi bi-building"></i>
+                    </div>
+                    <h4 class="use-case-title">Marketing Agencies</h4>
+                    <p class="use-case-description">
+                        Build prospect lists for every client in minutes. Scale outreach across industries and regions without hiring a research team.
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="use-case-card">
+                    <div class="use-case-icon">
+                        <i class="bi bi-graph-up-arrow"></i>
+                    </div>
+                    <h4 class="use-case-title">Sales Teams</h4>
+                    <p class="use-case-description">
+                        Keep your pipeline full without manual research. Discover verified prospects at scale and track every deal from first touch to close.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section 
+<section id="testimonials" class="testimonials-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">TESTIMONIALS</span>
+            <h2 class="section-title">Trusted by businesses worldwide</h2>
+        </div>
+
+        <div class="row testimonials-grid">
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "Scoutix helped me find 500 local restaurants in just minutes. I closed 3 new web design clients in the first week. Worth every penny!"
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JM</div>
+                        <div class="author-info">
+                            <h5 class="author-name">James Martinez</h5>
+                            <p class="author-role">Freelance Web Designer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "As a marketing agency, we generate thousands of leads monthly. The CRM keeps us organized and the pricing is unbeatable."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SP</div>
+                        <div class="author-info">
+                            <h5 class="author-name">Sarah Parker</h5>
+                            <p class="author-role">Agency Owner, Growth Digital</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="testimonial-text">
+                        "The lead generation is a game-changer. Simple setup, fresh results
+                        in minutes. Just enter your target and come back to a full lead list."
+                    </p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DK</div>
+                        <div class="author-info">
+                            <h5 class="author-name">David Kim</h5>
+                            <p class="author-role">Sales Manager, TechHub</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+-->
+<!-- Pricing Section -->
+<section id="pricing" class="pricing-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">PRICING</span>
+            <h2 class="section-title">Simple pricing that scales with you</h2>
+            <p class="section-description">
+                Every plan includes prospect discovery, a built-in CRM, and real-time results. No hidden fees.
+            </p>
+            <div class="money-back-badge">
+                <i class="bi bi-shield-fill-check me-2"></i>
+                30-Day Money-Back Guarantee — Not satisfied? Full refund, no questions asked.
+            </div>
+        </div>
+
+        <div class="row pricing-grid justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-plan-name">Starter</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">$</span>
+                            <span class="price-amount">39</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <p class="pricing-description">Perfect for freelancers and solo entrepreneurs targeting local markets</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> 800 leads per month</li>
+                        <li class="feature-highlight"><i class="bi bi-envelope-fill"></i> Email enrichment included <span class="feature-new-badge">New</span></li>
+                        <li><i class="bi bi-check-circle-fill"></i> City-level searches</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Verified business data from public directories</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Built-in CRM included</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead status tracking</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Standard generation speed</li>
+                    </ul>
+                    <a href="/Account/SignUp?planId=1" class="btn-pricing">Get Started</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card featured">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-plan-name">Growth</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">$</span>
+                            <span class="price-amount">69</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <p class="pricing-description">For agencies and growing sales teams targeting wider regions</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> 3,000 leads per month</li>
+                        <li class="feature-highlight"><i class="bi bi-envelope-fill"></i> Email enrichment included <span class="feature-new-badge">New</span></li>
+                        <li><i class="bi bi-check-circle-fill"></i> State-level searches</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Verified business data from public directories</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Built-in CRM included</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead status tracking</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Follow-up reminders</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Advanced CRM filters</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead export (CSV)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Fast generation speed</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Priority queue</li>
+                    </ul>
+                    <a href="/Account/SignUp?planId=2" class="btn-pricing">Get Started</a>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-plan-name">Pro</h3>
+                        <div class="pricing-price">
+                            <span class="price-currency">$</span>
+                            <span class="price-amount">149</span>
+                            <span class="price-period">/month</span>
+                        </div>
+                        <p class="pricing-description">For high-volume users prospecting at national scale</p>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="bi bi-check-circle-fill"></i> 8,000 leads per month</li>
+                        <li class="feature-highlight"><i class="bi bi-envelope-fill"></i> Email enrichment included <span class="feature-new-badge">New</span></li>
+                        <li><i class="bi bi-check-circle-fill"></i> Country-level searches</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Verified business data from public directories</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Built-in CRM included</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead status tracking</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Follow-up reminders</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Advanced CRM filters</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Lead export (CSV)</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Fastest generation speed</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Highest priority queue</li>
+                        <li><i class="bi bi-check-circle-fill"></i> Early access to new features</li>
+                    </ul>
+                    <a href="/Account/SignUp?planId=3" class="btn-pricing">Get Started</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <p class="pricing-note">💳 All plans support Visa and Mastercard • 🔒 Secure checkout powered by Paddle • 🛡️ 30-day money-back guarantee</p>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">FAQ</span>
+            <h2 class="section-title">Frequently asked questions</h2>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="faq-item">
+                    <h5 class="faq-question">What data do I get for each lead?</h5>
+                    <p class="faq-answer">You'll get business name, phone number, website URL, and full address for each lead sourced from publicly available business data online.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5 class="faq-question">How fast is the lead generation process?</h5>
+                    <p class="faq-answer">Lead generation starts instantly. Depending on your plan, you can collect 50-500 leads per search in minutes.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5 class="faq-question">What happens if I don't use all my monthly leads?</h5>
+                    <p class="faq-answer">Unused leads expire at the end of each month. Your quota resets on your billing date.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5 class="faq-question">Can I cancel my subscription anytime?</h5>
+                    <p class="faq-answer">Yes! You can cancel from the billing portal at any time. No long-term contracts or cancellation fees.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5 class="faq-question">Do you offer refunds?</h5>
+                    <p class="faq-answer">Yes — we offer a 30-day money-back guarantee for first-time subscribers. If you're not satisfied for any reason, email support@scoutix.io with the subject "Refund Request" within 30 days of your purchase and we'll refund you in full, no questions asked.</p>
+                </div>
+
+                <div class="faq-item">
+                    <h5 class="faq-question">Is the data collection legal?</h5>
+                    <p class="faq-answer">Scoutix sources publicly available business data from across the web. However, users are responsible for ensuring their use of the service complies with all applicable laws and regulations in their jurisdiction. Please review our Terms of Service for full details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="section-header text-center">
+            <span class="section-badge">CONTACT</span>
+            <h2 class="section-title">Get in touch with us</h2>
+            <p class="section-description">
+                Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
+            </p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="contact-form-wrapper">
+                    <form id="contactForm" class="contact-form">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Full Name</label>
+                                    <input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" id="email" name="email" class="form-control" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-control" placeholder="How can we help?" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-control" rows="6" placeholder="Tell us more about your inquiry..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-contact-submit">
+                            <i class="bi bi-send-fill me-2"></i>
+                            Send Message
+                        </button>
+                    </form>
+
+                    <div id="formSuccess" class="contact-success" style="display: none;">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <h4>Message Sent Successfully!</h4>
+                        <p>Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="contact-info-cards">
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="bi bi-envelope-fill"></i>
+                        </div>
+                        <h5 class="contact-info-title">Email Us</h5>
+                        <p class="contact-info-text">support@scoutix.io</p>
+                        <p class="contact-info-subtext">We'll respond within 24 hours</p>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="bi bi-clock-fill"></i>
+                        </div>
+                        <h5 class="contact-info-title">Response Time</h5>
+                        <p class="contact-info-text">24 hours</p>
+                        <p class="contact-info-subtext">Monday - Friday, 9AM - 6PM EST</p>
+                    </div>
+
+                    <div class="contact-info-card">
+                        <div class="contact-info-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h5 class="contact-info-title">Secure & Private</h5>
+                        <p class="contact-info-text">Your data is safe</p>
+                        <p class="contact-info-subtext">We never share your information</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-final-section">
+    <div class="container">
+        <div class="cta-content-box">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="cta-final-title">Ready to build your prospect pipeline?</h2>
+                    <p class="cta-final-description">
+                        Join sales teams and agencies already using Scoutix to discover, track, and close more deals. Plans from just $39/month.
+                    </p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <a href="/Account/SignUp" class="btn-cta-final">
+                        Get Started
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const form = this;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const successMessage = document.getElementById('formSuccess');
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const message = document.getElementById('message').value;
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Sending...';
+
+        try {
+            const response = await fetch('/Home/Contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ name, email, subject, message })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                form.style.display = 'none';
+                successMessage.style.display = 'block';
+                setTimeout(function () {
+                    form.reset();
+                    form.style.display = 'block';
+                    successMessage.style.display = 'none';
+                }, 5000);
+            } else {
+                alert('Something went wrong. Please try again.');
+            }
+        } catch {
+            alert('Something went wrong. Please try again.');
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bi bi-send-fill me-2"></i>Send Message';
+        }
+    });
+</script>

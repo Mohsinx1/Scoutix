@@ -1,0 +1,327 @@
+﻿@{
+    Layout = "_VisitorLayout";
+    ViewData["Title"] = "Checkout";
+}
+
+<!-- Checkout Section -->
+<section class="auth-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+
+                <!-- Step Indicator -->
+                <div class="plan-step-indicator mb-4">
+                    <div class="step-item">
+                        <div class="step-number" style="background:#059669;border-color:#059669;color:white;">
+                            <i class="bi bi-check-lg" style="font-size:1rem;"></i>
+                        </div>
+                        <span>Account</span>
+                    </div>
+                    <div class="step-line" style="background:#059669;"></div>
+                    <div class="step-item active">
+                        <div class="step-number">2</div>
+                        <span>Checkout</span>
+                    </div>
+                    <div class="step-line"></div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <span>Done</span>
+                    </div>
+                </div>
+
+                <div class="auth-card checkout-card">
+
+                    <!-- Header -->
+                    <div class="auth-header">
+                        <div class="auth-icon">
+                            <i class="bi bi-bag-check-fill"></i>
+                        </div>
+                        <h2 class="auth-title">Confirm Your Plan</h2>
+                        <p class="auth-description">Review your selection before proceeding</p>
+                    </div>
+
+                    <!-- Plan Summary -->
+                    <div class="checkout-plan-box">
+                        <div class="checkout-plan-row">
+                            <div class="checkout-plan-info">
+                                <span class="checkout-plan-label">Selected Plan</span>
+                                <span class="checkout-plan-name">@ViewBag.PlanName</span>
+                            </div>
+                            <a asp-action="ChoosePlan" asp-controller="Account" class="checkout-change-link">
+                                <i class="bi bi-pencil-fill"></i> Change
+                            </a>
+                        </div>
+                        <div class="checkout-plan-divider"></div>
+                        <div class="checkout-price-row">
+                            <span class="checkout-price-label">Billed monthly</span>
+                            <div class="checkout-price-amount">
+                                <span class="checkout-price-value">@ViewBag.PlanPrice</span>
+                                <span class="checkout-price-period">/ mo</span>
+                            </div>
+                        </div>
+                        <div class="checkout-trial-badge">
+                            <i class="bi bi-stars me-1"></i>
+                            14-day free trial — cancel anytime
+                        </div>
+                    </div>
+
+                    <!-- What's included -->
+                    <div class="checkout-includes">
+                        <span class="checkout-includes-title">What's included</span>
+                        <ul class="checkout-features-list" id="checkoutFeaturesList">
+                            <!-- Populated dynamically or hardcoded per plan -->
+                            <li><i class="bi bi-check-circle-fill"></i> Unlimited leads &amp; contacts</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Full CRM pipeline</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Email automation</li>
+                            <li><i class="bi bi-check-circle-fill"></i> Priority support</li>
+                        </ul>
+                    </div>
+
+                    <!-- CTA -->
+                    <button id="paddle-checkout-button" class="btn-auth-primary mt-2">
+                        <i class="bi bi-lock-fill me-2"></i>
+                        Proceed to Secure Checkout
+                    </button>
+
+                    <!-- Trust row -->
+                    <div class="checkout-trust-row">
+                        <span><i class="bi bi-shield-lock-fill"></i> 256-bit SSL</span>
+                        <span><i class="bi bi-credit-card-fill"></i> Secure payment via Paddle</span>
+                    </div>
+
+                    <div class="auth-alternative mt-3">
+                        Not ready? <a asp-action="Dashboard" asp-controller="Home">Go to dashboard</a>
+                    </div>
+
+                </div>
+
+                <!-- Bottom features -->
+                <div class="auth-features">
+                    <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>14-day free trial</span>
+                    </div>
+                    <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>No hidden fees</span>
+                    </div>
+                    <div class="auth-feature-item">
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>Cancel anytime</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* ── Checkout-specific styles (extends auth.css) ── */
+
+    .checkout-card {
+        animation: cardFadeUp 0.45s ease both;
+    }
+
+    @@keyframes cardFadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Plan summary box */
+    .checkout-plan-box {
+        background: #F0FDF4;
+        border: 1.5px solid rgba(5, 150, 105, 0.2);
+        border-radius: 14px;
+        padding: 1.4rem 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .checkout-plan-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .checkout-plan-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+    }
+
+    .checkout-plan-label {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #6B7280;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    .checkout-plan-name {
+        font-size: 1.2rem;
+        font-weight: 800;
+        color: #064E3B;
+    }
+
+    .checkout-change-link {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #059669;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.3rem 0.75rem;
+        border: 1.5px solid rgba(5,150,105,0.3);
+        border-radius: 8px;
+        transition: all 0.2s ease;
+    }
+
+        .checkout-change-link:hover {
+            background: white;
+            border-color: #059669;
+            color: #047857;
+        }
+
+    .checkout-plan-divider {
+        height: 1px;
+        background: rgba(5, 150, 105, 0.15);
+        margin: 1rem 0;
+    }
+
+    .checkout-price-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .checkout-price-label {
+        font-size: 0.9rem;
+        color: #6B7280;
+        font-weight: 500;
+    }
+
+    .checkout-price-amount {
+        display: flex;
+        align-items: baseline;
+        gap: 0.2rem;
+    }
+
+    .checkout-price-value {
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: #059669;
+        line-height: 1;
+    }
+
+    .checkout-price-period {
+        font-size: 0.9rem;
+        color: #6B7280;
+        font-weight: 500;
+    }
+
+    .checkout-trial-badge {
+        display: inline-flex;
+        align-items: center;
+        margin-top: 0.875rem;
+        background: rgba(5, 150, 105, 0.1);
+        color: #047857;
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 0.35rem 0.875rem;
+        border-radius: 50px;
+    }
+
+    /* Includes */
+    .checkout-includes {
+        margin-bottom: 1.5rem;
+    }
+
+    .checkout-includes-title {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #6B7280;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.75rem;
+    }
+
+    .checkout-features-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.55rem;
+    }
+
+        .checkout-features-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.92rem;
+            color: #374151;
+            font-weight: 500;
+        }
+
+            .checkout-features-list li i {
+                color: #059669;
+                font-size: 0.95rem;
+                flex-shrink: 0;
+            }
+
+    /* Trust row */
+    .checkout-trust-row {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-top: 1rem;
+        flex-wrap: wrap;
+    }
+
+        .checkout-trust-row span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: #9CA3AF;
+            font-weight: 500;
+        }
+
+        .checkout-trust-row i {
+            color: #059669;
+            font-size: 0.95rem;
+        }
+
+    /* Loading state on button */
+    .btn-auth-primary.loading {
+        opacity: 0.8;
+        pointer-events: none;
+    }
+
+        .btn-auth-primary.loading::after {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-left: 0.6rem;
+        }
+
+    @@keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+</style>

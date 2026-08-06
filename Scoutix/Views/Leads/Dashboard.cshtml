@@ -1,0 +1,925 @@
+﻿@using Scoutix.Models.Enums
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_UserLayout";
+}
+<div class="main-content">
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="page-header-content">
+            <div>
+                <h1 class="page-title">
+                    <i class="bi bi-gem me-3" style="color: var(--accent-gold);"></i>
+                    Dashboard
+                </h1>
+                <p class="page-description">Welcome back, @ViewBag.UserName! Here's what's happening with your leads today.</p>
+            </div>
+            <div class="page-actions">
+                <a href="/Leads/GenerateLeads" class="btn-generate-leads">
+                    <i class="bi bi-lightning-charge-fill me-2"></i>
+                    Generate Leads
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Follow-up Alert (shown only when leads are due today) -->
+    @if (ViewBag.FollowUpsToday > 0)
+    {
+        <div class="followup-alert" id="followupAlert">
+            <div class="followup-alert-icon">
+                <i class="bi bi-bell-fill"></i>
+            </div>
+            <div class="followup-alert-content">
+                <strong>@ViewBag.FollowUpsToday lead@(ViewBag.FollowUpsToday == 1 ? "" : "s") need follow-up today</strong>
+                <span>You have contacts scheduled for today that haven't been updated yet.</span>
+            </div>
+            <a href="/Leads/ManageLeads?followUpToday=true" class="followup-alert-btn">View All</a>
+            <button class="followup-alert-close" onclick="document.getElementById('followupAlert').style.display='none'">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+    }
+
+    <!-- Stat Cards Row -->
+    <div class="dash-stats-grid">
+
+        <div class="dash-stat-card">
+            <div class="dash-stat-top">
+                <div class="dash-stat-icon green">
+                    <i class="bi bi-people-fill"></i>
+                </div>
+            </div>
+            <div class="dash-stat-value">@ViewBag.TotalLeads</div>
+            <div class="dash-stat-label">Total Leads</div>
+            <div class="dash-stat-sub">All time</div>
+        </div>
+
+        <div class="dash-stat-card">
+            <div class="dash-stat-top">
+                <div class="dash-stat-icon gold">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                </div>
+            </div>
+            <div class="dash-stat-value">@ViewBag.GeneratedThisMonth</div>
+            <div class="dash-stat-label">Generated This Month</div>
+            <div class="dash-stat-sub">@ViewBag.LeadsRemaining remaining in quota</div>
+        </div>
+
+        <div class="dash-stat-card">
+            <div class="dash-stat-top">
+                <div class="dash-stat-icon dark">
+                    <i class="bi bi-trophy-fill"></i>
+                </div>
+            </div>
+            <div class="dash-stat-value">@ViewBag.ClosedWon</div>
+            <div class="dash-stat-label">Closed / Won</div>
+            <div class="dash-stat-sub">@ViewBag.ConversionRate% conversion rate</div>
+        </div>
+
+        <div class="dash-stat-card">
+            <div class="dash-stat-top">
+                <div class="dash-stat-icon amber">
+                    <i class="bi bi-clock-fill"></i>
+                </div>
+                @if (ViewBag.FollowUpsToday > 0)
+                {
+                    <div class="dash-stat-trend warning">
+                        <i class="bi bi-exclamation-circle-fill"></i> Due
+                    </div>
+                }
+            </div>
+            <div class="dash-stat-value">@ViewBag.FollowUpsToday</div>
+            <div class="dash-stat-label">Follow-ups Today</div>
+            <div class="dash-stat-sub">@(ViewBag.FollowUpsToday > 0 ? "Don't miss these" : "You're all caught up")</div>
+        </div>
+
+    </div>
+
+    <!-- Quota Bar + Middle Row -->
+    <div class="dash-mid-grid">
+
+        <!-- Monthly Quota Card -->
+        <div class="dash-card quota-card">
+            <div class="dash-card-header">
+                <div class="dash-card-title">
+                    <i class="bi bi-speedometer2"></i>
+                    Monthly Quota
+                </div>
+                <span class="plan-chip">@ViewBag.PlanName Plan</span>
+            </div>
+            <div class="dash-card-body">
+                <div class="quota-numbers">
+                    <div class="quota-used">
+                        <span class="quota-big">@ViewBag.GeneratedThisMonth</span>
+                        <span class="quota-unit">used</span>
+                    </div>
+                    <div class="quota-divider">/</div>
+                    <div class="quota-total">
+                        <span class="quota-big muted">@ViewBag.LeadQuota</span>
+                        <span class="quota-unit muted">total</span>
+                    </div>
+                </div>
+
+                <div class="quota-bar-wrapper">
+                    <div class="quota-bar-track">
+                        <div class="quota-bar-fill" style="width: @(ViewBag.QuotaPercent)%"></div>
+                    </div>
+                    <div class="quota-bar-labels">
+                        <span class="quota-pct">@(ViewBag.QuotaPercent)% used</span>
+                        <span class="quota-remaining">@ViewBag.LeadsRemaining remaining</span>
+                    </div>
+                </div>
+
+                <div class="quota-resets">
+                    <i class="bi bi-calendar3 me-1"></i>
+                    Resets in <strong>@ViewBag.DaysUntilReset days</strong> on @ViewBag.ResetDate
+                </div>
+
+                @if (ViewBag.PlanName != "Pro")
+                {
+                    @if (ViewBag.PlanName == "Starter")
+                    {
+                        <a href="/Leads/Settings" class="quota-upgrade-btn">
+                            <i class="bi bi-arrow-up-circle-fill me-2"></i>
+                            Upgrade to Growth — 3,000 leads/mo
+                        </a>
+                    }
+                    else if (ViewBag.PlanName == "Growth")
+                    {
+                        <a href="/Leads/Settings" class="quota-upgrade-btn">
+                            <i class="bi bi-arrow-up-circle-fill me-2"></i>
+                            Upgrade to Pro — 8,000 leads/mo
+                        </a>
+                    }
+                }
+            </div>
+        </div>
+
+      
+            
+
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="dash-bottom-grid">
+
+        <!-- Lead Status Breakdown — legend only, no donut chart for MVP -->
+        <div class="dash-card">
+            <div class="dash-card-header">
+                <div class="dash-card-title">
+                    <i class="bi bi-pie-chart-fill"></i>
+                    Lead Status Breakdown
+                </div>
+                <a href="/Leads/ManageLeads" class="dash-card-link">View All</a>
+            </div>
+            <div class="dash-card-body">
+                @{
+                    var statusBreakdown = ViewBag.StatusBreakdown as IEnumerable<dynamic>;
+                    var statusMap = new Dictionary<int, (string Label, string Color)>
+                    {
+                        [(int)LeadStatus.New] = ("New", "#3B82F6"),
+                        [(int)LeadStatus.CalledNoAnswer] = ("Called / No Answer", "#F59E0B"),
+                        [(int)LeadStatus.LeftVoicemail] = ("Left Voicemail", "#8B5CF6"),
+                        [(int)LeadStatus.Interested] = ("Interested", "#10B981"),
+                        [(int)LeadStatus.FollowUp] = ("Follow-up", "#06B6D4"),
+                        [(int)LeadStatus.EmailSent] = ("Email Sent", "#059669"),
+                        [(int)LeadStatus.NotInterested] = ("Not Interested", "#EF4444"),
+                        [(int)LeadStatus.WrongNumber] = ("Wrong Number", "#6B7280"),
+                        [(int)LeadStatus.Closed] = ("Closed / Won", "#064E3B"),
+                    };
+                    var countLookup = statusBreakdown?.ToDictionary(x => (int)x.Status, x => (int)x.Count) ?? new Dictionary<int, int>();
+                    var totalStatus = countLookup.Values.Sum();
+                }
+
+                <div class="status-total-summary mb-3">
+                    <span class="status-total-num">@totalStatus</span>
+                    <span class="status-total-lbl ms-1">Total Leads</span>
+                </div>
+
+                <div class="status-legend">
+                    @foreach (var (statusInt, (label, color)) in statusMap)
+                    {
+                        var count = countLookup.TryGetValue(statusInt, out var c) ? c : 0;
+                        <div class="status-legend-item">
+                            <span class="status-legend-dot" style="background:@color"></span>
+                            <span class="status-legend-label">@label</span>
+                            <span class="status-legend-count">@count</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Follow-up Today Widget -->
+        <div class="dash-card">
+            <div class="dash-card-header">
+                <div class="dash-card-title">
+                    <i class="bi bi-calendar-check-fill"></i>
+                    Follow-up Today
+                </div>
+                <a href="/Leads/ManageLeads?followUpToday=true" class="dash-card-link">See All</a>
+            </div>
+            <div class="dash-card-body p-0">
+                <div class="followup-list">
+                    @{
+                        var followUpList = ViewBag.FollowUpList as IEnumerable<dynamic>;
+                    }
+                    @if (followUpList == null || !followUpList.Any())
+                    {
+                        <div class="p-4 text-center" style="color: var(--text-light); font-size: 0.875rem;">
+                            <i class="bi bi-check-circle me-2" style="color: var(--primary-green);"></i>
+                            No follow-ups due today
+                        </div>
+                    }
+                    else
+                    {
+                        @foreach (var item in followUpList)
+                        {
+                            var name = (string?)item.Name ?? "Unknown";
+                            var initials = string.Join("", name.Split(' ').Take(2).Select(w => w.Length > 0 ? w[0].ToString().ToUpper() : ""));
+                            var statusInt = (int)item.Status;
+                            var statusLabel = statusMap.TryGetValue(statusInt, out var sm) ? sm.Label : "Unknown";
+                            var statusClass = statusInt == (int)LeadStatus.Interested ? "status-interested"
+                                : statusInt == (int)LeadStatus.FollowUp ? "status-followup"
+                                : statusInt == (int)LeadStatus.CalledNoAnswer ? "status-calledNoAnswer"
+                                : "";
+
+                            <div class="followup-item">
+                                <div class="followup-avatar">@initials</div>
+                                <div class="followup-info">
+                                    <div class="followup-name">@name</div>
+                                    <div class="followup-meta">
+                                        @if (!string.IsNullOrEmpty((string?)item.Niche))
+                                        {
+                                            <span class="followup-niche">@item.Niche</span>
+                                        }
+                                        @if (!string.IsNullOrEmpty((string?)item.City))
+                                        {
+                                            <span class="followup-city">@item.City</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="followup-status @statusClass">@statusLabel</div>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+                                  
+    </div>
+
+</div>
+        
+<!-- ========================================
+     Dashboard Styles
+     ======================================== -->
+<style>
+    /* Follow-up Alert */
+    .followup-alert {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background: linear-gradient(90deg, rgba(245,158,11,0.12) 0%, rgba(245,158,11,0.05) 100%);
+        border: 1px solid rgba(245,158,11,0.35);
+        border-left: 4px solid var(--accent-gold);
+        border-radius: 12px;
+        margin-bottom: 2rem;
+    }
+
+    .followup-alert-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: rgba(245,158,11,0.15);
+        color: var(--accent-gold);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        flex-shrink: 0;
+    }
+
+    .followup-alert-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+    }
+
+        .followup-alert-content strong {
+            font-size: 0.9375rem;
+            color: var(--text-dark);
+        }
+
+        .followup-alert-content span {
+            font-size: 0.8125rem;
+            color: var(--text-gray);
+        }
+
+    .followup-alert-btn {
+        padding: 0.5rem 1.25rem;
+        background: var(--accent-gold);
+        color: white;
+        border-radius: 8px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+    }
+
+        .followup-alert-btn:hover {
+            background: #D97706;
+            color: white;
+        }
+
+    .followup-alert-close {
+        width: 32px;
+        height: 32px;
+        border: none;
+        background: transparent;
+        color: var(--text-light);
+        cursor: pointer;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.125rem;
+        transition: all 0.2s ease;
+    }
+
+        .followup-alert-close:hover {
+            background: rgba(0,0,0,0.05);
+            color: var(--text-dark);
+        }
+
+    /* Stat Cards Grid */
+    .dash-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .dash-stat-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid var(--border-light);
+        padding: 1.5rem;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        transition: all 0.3s ease;
+    }
+
+        .dash-stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+    .dash-stat-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.25rem;
+    }
+
+    .dash-stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.25rem;
+        color: white;
+    }
+
+        .dash-stat-icon.green {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+        }
+
+        .dash-stat-icon.gold {
+            background: linear-gradient(135deg, var(--accent-gold) 0%, #D97706 100%);
+        }
+
+        .dash-stat-icon.dark {
+            background: linear-gradient(135deg, var(--dark-green) 0%, var(--dark-green-light) 100%);
+        }
+
+        .dash-stat-icon.amber {
+            background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+        }
+
+    .dash-stat-trend {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        padding: 0.25rem 0.625rem;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+    }
+
+        .dash-stat-trend.positive {
+            background: rgba(16,185,129,0.1);
+            color: #10B981;
+        }
+
+        .dash-stat-trend.warning {
+            background: rgba(239,68,68,0.1);
+            color: #EF4444;
+        }
+
+    .dash-stat-value {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--text-dark);
+        line-height: 1;
+        margin-bottom: 0.375rem;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .dash-stat-label {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        margin-bottom: 0.25rem;
+    }
+
+    .dash-stat-sub {
+        font-size: 0.8125rem;
+        color: var(--text-light);
+    }
+
+    /* Mid Grid */
+    .dash-mid-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    /* Bottom Grid */
+    .dash-bottom-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Shared Card */
+    .dash-card {
+        background: white;
+        border-radius: 16px;
+        border: 1px solid var(--border-light);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .dash-card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.5rem;
+        border-bottom: 1px solid var(--border-light);
+    }
+
+    .dash-card-title {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--text-dark);
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+    }
+
+        .dash-card-title i {
+            color: var(--primary-green);
+        }
+
+    .dash-card-link {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--primary-green);
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+        .dash-card-link:hover {
+            color: var(--primary-dark);
+        }
+
+    .dash-card-body {
+        padding: 1.5rem;
+        flex: 1;
+    }
+
+        .dash-card-body.p-0 {
+            padding: 0;
+        }
+
+    /* Quota Card */
+    .plan-chip {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.25rem 0.75rem;
+        background: rgba(5,150,105,0.1);
+        color: var(--primary-green);
+        border-radius: 20px;
+    }
+
+    .quota-numbers {
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .quota-used, .quota-total {
+        display: flex;
+        align-items: baseline;
+        gap: 0.375rem;
+    }
+
+    .quota-big {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary-green);
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+    }
+
+        .quota-big.muted {
+            color: var(--text-light);
+            font-size: 1.75rem;
+        }
+
+    .quota-unit {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--text-gray);
+    }
+
+        .quota-unit.muted {
+            color: var(--text-light);
+        }
+
+    .quota-divider {
+        font-size: 1.5rem;
+        color: var(--border-medium);
+        font-weight: 300;
+    }
+
+    .quota-bar-wrapper {
+        margin-bottom: 1.25rem;
+    }
+
+    .quota-bar-track {
+        height: 10px;
+        background: var(--border-light);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+    }
+
+    .quota-bar-fill {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary-green) 0%, var(--accent-gold) 100%);
+        border-radius: 10px;
+        transition: width 1s ease;
+    }
+
+    .quota-bar-labels {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .quota-pct {
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--primary-green);
+    }
+
+    .quota-remaining {
+        font-size: 0.8125rem;
+        color: var(--text-gray);
+    }
+
+    .quota-resets {
+        font-size: 0.8125rem;
+        color: var(--text-gray);
+        padding: 0.75rem 1rem;
+        background: var(--light-bg);
+        border-radius: 8px;
+        margin-bottom: 1rem;
+    }
+
+    .quota-upgrade-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 0.875rem;
+        background: linear-gradient(135deg, var(--dark-green) 0%, var(--dark-green-light) 100%);
+        color: white;
+        border-radius: 10px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.2s ease;
+    }
+
+        .quota-upgrade-btn:hover {
+            opacity: 0.9;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+    /* Chart Period Tabs */
+    .chart-period-tabs {
+        display: flex;
+        gap: 0.25rem;
+        background: var(--light-bg);
+        border-radius: 8px;
+        padding: 0.25rem;
+    }
+
+    .period-tab {
+        padding: 0.375rem 0.75rem;
+        border: none;
+        background: transparent;
+        border-radius: 6px;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: var(--text-gray);
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        .period-tab.active {
+            background: white;
+            color: var(--primary-green);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+    /* Donut Chart */
+    .status-chart-wrap {
+        position: relative;
+        width: 160px;
+        height: 160px;
+        margin: 0 auto 1.25rem;
+    }
+
+    .status-chart-center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        pointer-events: none;
+    }
+
+    .status-total-num {
+        display: block;
+        font-size: 1.75rem;
+        font-weight: 800;
+        color: var(--text-dark);
+        line-height: 1;
+    }
+
+    .status-total-lbl {
+        font-size: 0.75rem;
+        color: var(--text-gray);
+        font-weight: 600;
+    }
+
+    .status-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .status-legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+    }
+
+    .status-legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+    }
+
+    .status-legend-label {
+        flex: 1;
+        font-size: 0.8125rem;
+        color: var(--text-gray);
+    }
+
+    .status-legend-count {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+
+    /* Follow-up List */
+    .followup-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .followup-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border-light);
+        transition: background 0.2s ease;
+        cursor: pointer;
+    }
+
+        .followup-item:last-child {
+            border-bottom: none;
+        }
+
+        .followup-item:hover {
+            background: rgba(5,150,105,0.03);
+        }
+
+    .followup-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-dark) 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.8125rem;
+        flex-shrink: 0;
+    }
+
+    .followup-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .followup-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .followup-meta {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.2rem;
+    }
+
+    .followup-niche {
+        font-size: 0.75rem;
+        color: var(--primary-green);
+        font-weight: 600;
+    }
+
+    .followup-city {
+        font-size: 0.75rem;
+        color: var(--text-light);
+    }
+
+    .followup-status {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.25rem 0.625rem;
+        border-radius: 6px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+        .followup-status.status-interested {
+            background: rgba(16,185,129,0.1);
+            color: #10B981;
+        }
+
+        .followup-status.status-followup {
+            background: rgba(6,182,212,0.1);
+            color: #06B6D4;
+        }
+
+        .followup-status.status-calledNoAnswer {
+            background: rgba(245,158,11,0.1);
+            color: #F59E0B;
+        }
+
+    /* Recent Searches */
+    .recent-searches-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .recent-search-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--border-light);
+        transition: background 0.2s ease;
+    }
+
+        .recent-search-item:last-child {
+            border-bottom: none;
+        }
+
+        .recent-search-item:hover {
+            background: rgba(5,150,105,0.03);
+        }
+
+    .recent-search-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        background: var(--light-bg);
+        color: var(--primary-green);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        flex-shrink: 0;
+    }
+
+    .recent-search-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .recent-search-query {
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: var(--text-dark);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .recent-search-meta {
+        font-size: 0.75rem;
+        color: var(--text-light);
+        margin-top: 0.15rem;
+    }
+
+    .recent-search-badge {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.2rem 0.625rem;
+        border-radius: 6px;
+        flex-shrink: 0;
+    }
+
+        .recent-search-badge.success {
+            background: rgba(16,185,129,0.1);
+            color: #10B981;
+        }
+
+    /* Responsive */
+    @@media (max-width: 1200px) {
+        .dash-stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .dash-bottom-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @@media (max-width: 900px) {
+        .dash-mid-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .dash-stats-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .dash-bottom-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .dash-stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

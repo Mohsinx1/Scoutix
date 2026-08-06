@@ -1,0 +1,378 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Scoutix</title>
+    <!-- jQuery -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* Toast *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.css" />
+
+    <!-- TomSelect -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/css/tom-select.bootstrap5.min.css" />
+    <!-- DataTable -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css" />
+
+    <!-- Custom Styles -->
+    @*     <link rel="stylesheet" href="~/css/userlayout.css" asp-append-version="true" />
+     <link rel="stylesheet" href="~/Scoutix.styles.css" asp-append-version="true" />
+ *@    <link rel="stylesheet" href="~/css/leads.css" asp-append-version="true" />
+
+    <!-- Page specific styles -->
+    @RenderSection("Styles", required: false)
+
+    <script>
+        try {
+          if (localStorage.getItem('sidebarCollapsed') === 'true') {
+            document.documentElement.classList.add('sidebar-collapsed');
+          }
+        } catch (e) {}
+    </script>
+</head>
+<body>
+    @{
+        // Declare variables before the @if block
+        var userId = 0;
+        var userName = "Guest";
+        var email = "No email";
+
+        if (User.Identity.IsAuthenticated)
+        {
+            // Assign values based on the user's claims if authenticated
+            userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            userName = User.FindFirst(ClaimTypes.Name)?.Value;
+            email = User.FindFirst(ClaimTypes.Email)?.Value;
+        }
+    }
+
+ 
+    <!-- Header / Navbar -->
+    <header>
+        <nav class="app-navbar">
+            <div class="navbar-container">
+                <!-- Left Section -->
+                <div class="navbar-left">
+                    <button id="sidebarToggle" type="button" class="sidebar-toggle-btn">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <a class="app-brand" asp-controller="Leads" asp-action="ManageLeads">
+                        <i class="bi bi-gem brand-icon"></i>
+                        <span class="brand-text">Scoutix</span>
+                    </a>
+                </div>
+
+                <!-- Right Section -->
+                <div class="navbar-right">
+                    <!-- Notifications (Optional) -->
+                   @*  <button class="navbar-icon-btn" title="Notifications">
+                        <i class="bi bi-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </button> *@
+
+                    <!-- User Menu -->
+                    <div class="dropdown">
+                        <button class="user-menu-btn dropdown-toggle" type="button" id="userMenuButton"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="user-avatar">
+                                <i class="bi bi-person-fill"></i>
+                            </span>
+                            <span class="user-name">
+                              
+                            </span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end user-dropdown" aria-labelledby="userMenuButton">
+                            <li class="dropdown-header">
+                                <div class="user-dropdown-info">
+                                    <strong>@userName</strong>
+                                    <small class="text-muted">@email</small>
+                                </div>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            @*  <li>
+                                <a class="dropdown-item" asp-controller="Leads" asp-action="Dashboard">
+                                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
+                                </a>
+                            </li>
+                               <li>
+                                <a class="dropdown-item" asp-controller="Settings" asp-action="Index">
+                                    <i class="bi bi-gear me-2"></i>Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Billing" asp-action="Index">
+                                    <i class="bi bi-credit-card me-2"></i>Billing
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="Account" asp-action="Privacy">
+                                    <i class="bi bi-shield-check me-2"></i>Privacy
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="/Contact">
+                                    <i class="bi bi-question-circle me-2"></i>Help & Support
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider" /></li> *@
+                            <li>
+                                <a class="dropdown-item text-danger" asp-controller="Account" asp-action="Logout">
+                                    <i class="bi bi-box-arrow-right me-2"></i>Sign Out
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Main App Container -->
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="app-sidebar" id="appSidebar">
+            <div class="sidebar-content">
+                <!-- Sidebar Header -->
+                <div class="sidebar-header">
+                    <span class="sidebar-header-title">Menu</span>
+                </div>
+
+                <!-- Main Navigation -->
+                <nav class="sidebar-nav">
+                    <div class="nav-section">
+                        <div class="nav-section-title">Main</div>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")"
+                                   asp-controller="Leads" asp-action="Dashboard">
+                                    <span class="nav-icon">
+                                        <i class="bi bi-speedometer2"></i>
+                                    </span>
+                                    <span class="nav-label">Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Leads" && ViewContext.RouteData.Values["action"]?.ToString() == "ManageLeads" ? "active" : "")"
+                                   asp-controller="Leads" asp-action="ManageLeads" >
+                                    <span class="nav-icon">
+                                        <i class="bi bi-people"></i>
+                                    </span>
+                                    <span class="nav-label">Leads</span>
+                                    @*                                     <span class="nav-badge">247</span>
+ *@                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Leads" && ViewContext.RouteData.Values["action"]?.ToString() == "GenerateLeads" ? "active" : "")"
+                                   asp-controller="Leads" asp-action="GenerateLeads" >
+                                    <span class="nav-icon">
+                                        <i class="bi bi-lightning-charge"></i>
+                                    </span>
+                                    <span class="nav-label">Generate</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="nav-section">
+                        <div class="nav-section-title">Account</div>
+                        <ul class="nav-list">
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Settings" ? "active" : "")"
+                                   asp-controller="Leads" asp-action="Settings" >
+                                    <span class="nav-icon">
+                                        <i class="bi bi-gear"></i>
+                                    </span>
+                                    <span class="nav-label">Settings</span>
+                                </a>
+                            </li>
+                            @*  <li class="nav-item">
+                                <a class="nav-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Billing" ? "active" : "")"
+                                   asp-controller="Billing" asp-action="Index">
+                                    <span class="nav-icon">
+                                        <i class="bi bi-credit-card"></i>
+                                    </span>
+                                    <span class="nav-label">Billing</span>
+                                </a>
+                            </li>*@
+                        </ul>
+                    </div> 
+                </nav>
+
+                <!-- Sidebar Footer / User Plan -->
+               @*  <div class="sidebar-footer">
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <div class="plan-badge">Growth Plan</div>
+                            <i class="bi bi-chevron-right"></i>
+                        </div>
+                        <div class="plan-usage">
+                            <div class="usage-label">Leads Used</div>
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: 68%"></div>
+                            </div>
+                            <div class="usage-text">2,040 / 3,000</div>
+                        </div>
+                        <a href="/Billing" class="plan-upgrade-link">
+                            <i class="bi bi-arrow-up-circle me-1"></i>Upgrade Plan
+                        </a>
+                    </div>
+                </div> *@
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="app-main">
+            <div class="main-content" id="app-main">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="footer-content">
+            <span>© 2026 Scoutix. All rights reserved.</span>
+            <div class="footer-links">
+                <a href="/Privacy">Privacy</a>
+                <a href="/Terms">Terms</a>
+                <a href="/Contact">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Lead Details Drawer -->
+    <div class="drawer-backdrop" id="gmDrawerBackdrop"></div>
+    <div class="drawer" id="gmLeadDrawer">
+        <div class="drawer-header">
+            <h3 class="drawer-title" id="gmDrawerTitle">Lead Details</h3>
+            <button class="drawer-close" id="gmDrawerClose">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="drawer-body" id="gmDrawerBody">
+            <div class="drawer-loading">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-muted">Loading lead details...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notes/Status Update Modal -->
+    <div class="modal-backdrop" id="gmNotesBackdrop"></div>
+    <div class="notes-modal" id="gmNotesSheet">
+        <div class="notes-modal-content">
+            <div class="notes-header">
+                <h4 class="notes-title" id="gmNotesTitle">Update Status</h4>
+                <button class="notes-close" id="gmNotesClose">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+          <div class="notes-body">
+    <div class="notes-helper" id="gmNotesHelper">
+        <i class="bi bi-info-circle me-2"></i>
+        <span>Add notes about this status change</span>
+    </div>
+    <textarea id="gmNotesTextarea"
+              class="notes-textarea"
+              rows="5"
+              placeholder="Enter your notes here..."></textarea>
+    <div class="notes-error d-none" id="gmNotesError">
+        <i class="bi bi-exclamation-circle me-1"></i>
+        Notes are required for this status.
+    </div>
+
+    <!-- Follow-up date field — shown only for FollowUp status -->
+    <div id="gmFollowUpDateWrapper" class="d-none" style="margin-top: 1rem;">
+        <label class="filter-label">
+            <i class="bi bi-calendar-check me-1"></i>
+            Follow-up Date
+        </label>
+        @if (ViewBag.CanUseFollowUpReminders == true)
+        {
+            <input type="date"
+                   id="gmFollowUpDate"
+                   class="field-input"
+                   style="padding: 0.875rem 1rem;"
+                   min="@DateTime.UtcNow.ToString("yyyy-MM-dd")" />
+        }
+        else
+        {
+            <div class="followup-upgrade-note">
+                <i class="bi bi-lock-fill me-2"></i>
+                Follow-up reminders are available on Growth and Pro plans.
+                <a href="/Leads/Settings">Upgrade now</a>
+            </div>
+        }
+    </div>
+</div>
+            <div class="notes-footer">
+                <button class="btn-notes-cancel" id="gmNotesCancel">
+                    Cancel
+                </button>
+                <button class="btn-notes-save" id="gmNotesSave">
+                    <i class="bi bi-check-circle me-1"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    @* Toast *@
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+  
+    <!-- TomSelect -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select@2.4.1/dist/js/tom-select.complete.min.js"></script>
+  
+    <!-- Bootstrap -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @* DataTable *@
+    <script src="https://cdn.datatables.net/2.3.7/js/dataTables.min.js"></script>
+   
+    <!-- Custom Scripts -->
+    <script src="~/js/userlayout.js" asp-append-version="true"></script>
+    <script src="~/js/leads.js" asp-append-version="true"></script>
+    <script>
+        // Check if there's a message and type in TempData
+        $(document).ready(function () {
+            // Get message and type from TempData (assuming TempData is passed from controller)
+            var message = '@TempData["Message"]';
+            var messageType = '@TempData["MessageType"]';
+
+            // If message exists, show toast notification
+            if (message && messageType) {
+                // Show toast based on the type
+                iziToast[messageType]({
+                    title: messageType.charAt(0).toUpperCase() + messageType.slice(1),
+                    message: message,
+                    position: 'topCenter', // Position of the toast
+                    timeout: 6000, // Duration in ms
+                    transitionIn: 'fadeIn', // Animation type when appearing
+                    transitionOut: 'fadeOut', // Animation type when disappearing
+                });
+            }
+        });
+    </script>
+    <!-- Page Specific Scripts -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

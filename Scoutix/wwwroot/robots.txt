@@ -1,0 +1,129 @@
+# Scoutix robots.txt
+# AI training crawlers and traditional search bots are all explicitly allowed.
+# The Disallow rules below apply identically to every bot.
+
+User-agent: *
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+User-agent: anthropic-ai
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+# Google AI (Gemini, AI Overviews training)
+User-agent: Google-Extended
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+# Meta AI
+User-agent: Meta-ExternalAgent
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+User-agent: FacebookBot
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+Disallow: /Account/Logout
+Disallow: /Account/CheckoutSuccess
+Disallow: /Account/VerifyEmail
+Disallow: /Account/ConfirmPlan
+Disallow: /Account/Checkout
+Disallow: /hangfire
+
+Sitemap: https://scoutix.io/sitemap.xml

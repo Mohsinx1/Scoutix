@@ -1,0 +1,889 @@
+﻿@{
+    ViewData["Title"] = "Terms of Service — Scoutix";
+    Layout = "_VisitorLayout";
+}
+
+<style>
+    :root {
+        --primary: #059669;
+        --accent: #F59E0B;
+        --dark: #064E3B;
+        --light-green: #ECFDF5;
+        --gold-light: #FEF3C7;
+        --text: #1C1917;
+        --text-muted: #6B7280;
+        --border: #D1FAE5
+    }
+
+    .page-hero {
+        background: linear-gradient(135deg, #78350F 0%, #92400E 40%, #B45309 100%);
+        padding: 80px 60px 100px;
+        position: relative;
+        overflow: hidden
+    }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(245,158,11,0.2) 0%, transparent 60%)
+        }
+
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 400px;
+            height: 300px;
+            background: radial-gradient(circle at bottom left, rgba(6,78,59,0.4) 0%, transparent 70%)
+        }
+
+    .hero-inner {
+        max-width: 900px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 1
+    }
+
+    .page-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(5,150,105,0.2);
+        border: 1px solid rgba(5,150,105,0.4);
+        color: #6EE7B7;
+        padding: 6px 16px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+        margin-bottom: 24px
+    }
+
+    .page-hero h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: clamp(36px, 5vw, 56px);
+        color: #fff;
+        font-weight: 700;
+        line-height: 1.15;
+        margin-bottom: 20px
+    }
+
+        .page-hero h1 em {
+            font-style: normal;
+            color: #FDE68A
+        }
+
+    .page-hero p {
+        font-size: 17px;
+        color: rgba(255,255,255,0.7);
+        max-width: 600px;
+        margin-bottom: 36px
+    }
+
+    .meta-row {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: rgba(255,255,255,0.6);
+        font-size: 13px
+    }
+
+        .meta-item .dot {
+            width: 6px;
+            height: 6px;
+            background: #FDE68A;
+            border-radius: 50%
+        }
+
+    .content-wrapper {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 60px 60px 100px;
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 60px;
+        align-items: start
+    }
+
+    .sidebar {
+        position: sticky;
+        top: 80px
+    }
+
+    .sidebar-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 4px 24px rgba(5,150,105,0.06)
+    }
+
+    .sidebar-title {
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 16px
+    }
+
+    .toc-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 0;
+        margin: 0
+    }
+
+        .toc-list a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 13px;
+            padding: 7px 12px;
+            border-radius: 8px;
+            display: block;
+            transition: all .2s;
+            border-left: 2px solid transparent
+        }
+
+            .toc-list a:hover {
+                color: var(--primary);
+                background: var(--light-green);
+                border-left-color: var(--primary);
+                padding-left: 16px
+            }
+
+    .sidebar-warning {
+        margin-top: 20px;
+        padding: 16px;
+        background: var(--gold-light);
+        border-radius: 10px;
+        border: 1px solid rgba(245,158,11,0.3)
+    }
+
+        .sidebar-warning p {
+            font-size: 12.5px;
+            color: #78350F;
+            line-height: 1.6;
+            margin: 0
+        }
+
+    .main-content {
+        min-width: 0
+    }
+
+    .intro-card {
+        background: var(--gold-light);
+        border: 1px solid rgba(245,158,11,0.3);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-bottom: 48px;
+        display: flex;
+        gap: 16px;
+        align-items: flex-start
+    }
+
+    .intro-card-icon {
+        font-size: 24px;
+        flex-shrink: 0
+    }
+
+    .intro-card p {
+        font-size: 15px;
+        color: #78350F;
+        line-height: 1.7;
+        margin: 0
+    }
+
+        .intro-card p strong {
+            color: #92400E
+        }
+
+    .info-box {
+        background: #EFF6FF;
+        border-left: 4px solid #3B82F6;
+        border-radius: 0 12px 12px 0;
+        padding: 20px 24px;
+        margin: 24px 0;
+        font-size: 15px;
+        color: #1E3A5F;
+        line-height: 1.8
+    }
+
+    section.policy-section {
+        margin-bottom: 56px;
+        scroll-margin-top: 100px
+    }
+
+    .section-number {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--accent);
+        text-transform: uppercase;
+        letter-spacing: .1em;
+        margin-bottom: 8px
+    }
+
+    .policy-section h2 {
+        font-family: 'Playfair Display', serif;
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 20px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid var(--border)
+    }
+
+    .policy-section p {
+        font-size: 15.5px;
+        color: #374151;
+        margin-bottom: 16px;
+        line-height: 1.85
+    }
+
+    .policy-section h3 {
+        font-family: 'Playfair Display', serif;
+        font-size: 18px;
+        color: var(--dark);
+        margin: 28px 0 12px;
+        font-weight: 600
+    }
+
+    .highlight-box {
+        background: var(--light-green);
+        border-left: 4px solid var(--primary);
+        border-radius: 0 12px 12px 0;
+        padding: 20px 24px;
+        margin: 24px 0;
+        font-size: 15px;
+        color: #065F46;
+        line-height: 1.8
+    }
+
+    .warning-box {
+        background: #FEF2F2;
+        border-left: 4px solid #EF4444;
+        border-radius: 0 12px 12px 0;
+        padding: 20px 24px;
+        margin: 24px 0;
+        font-size: 15px;
+        color: #7F1D1D;
+        line-height: 1.8
+    }
+
+    .terms-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin: 20px 0
+    }
+
+    .term-card {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 20px
+    }
+
+        .term-card.allowed {
+            border-top: 3px solid var(--primary)
+        }
+
+        .term-card.prohibited {
+            border-top: 3px solid #EF4444
+        }
+
+        .term-card h4 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .term-card.allowed h4 {
+            color: var(--primary)
+        }
+
+        .term-card.prohibited h4 {
+            color: #DC2626
+        }
+
+        .term-card ul {
+            list-style: none;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.9;
+            padding: 0;
+            margin: 0
+        }
+
+        .term-card.allowed ul li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            margin-right: 8px
+        }
+
+        .term-card.prohibited ul li::before {
+            content: '✕';
+            color: #DC2626;
+            font-weight: 700;
+            margin-right: 8px
+        }
+
+    .plan-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 1px 12px rgba(5,150,105,0.08)
+    }
+
+        .plan-table thead tr {
+            background: var(--dark);
+            color: #fff
+        }
+
+        .plan-table th {
+            padding: 14px 20px;
+            text-align: left;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: .03em
+        }
+
+        .plan-table tbody tr {
+            border-bottom: 1px solid var(--border);
+            background: #fff;
+            transition: background .15s
+        }
+
+            .plan-table tbody tr:hover {
+                background: var(--light-green)
+            }
+
+            .plan-table tbody tr:last-child {
+                border-bottom: none
+            }
+
+        .plan-table td {
+            padding: 14px 20px;
+            font-size: 14px;
+            color: #374151
+        }
+
+            .plan-table td:first-child {
+                font-weight: 500;
+                color: var(--dark)
+            }
+
+    .badge-green {
+        display: inline-block;
+        background: var(--light-green);
+        color: var(--primary);
+        padding: 2px 10px;
+        border-radius: 50px;
+        font-size: 12px;
+        font-weight: 600
+    }
+
+    .contact-card {
+        background: linear-gradient(135deg, #78350F, #92400E);
+        border-radius: 16px;
+        padding: 36px;
+        color: #fff;
+        margin-top: 20px;
+        position: relative;
+        overflow: hidden
+    }
+
+        .contact-card::before {
+            content: '⚖';
+            position: absolute;
+            right: 30px;
+            top: 20px;
+            font-size: 80px;
+            opacity: .08
+        }
+
+        .contact-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: #FDE68A
+        }
+
+        .contact-card p {
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+            margin-bottom: 20px
+        }
+
+    .contact-methods {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap
+    }
+
+    .contact-method {
+        background: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 10px;
+        padding: 12px 18px;
+        font-size: 14px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 8px
+    }
+
+        .contact-method span {
+            color: #FDE68A
+        }
+
+    @@keyframes fadeUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px)
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0)
+        }
+    }
+
+    .hero-inner > * {
+        animation: fadeUp .6s ease forwards;
+        opacity: 0
+    }
+
+        .hero-inner > *:nth-child(1) {
+            animation-delay: .1s
+        }
+
+        .hero-inner > *:nth-child(2) {
+            animation-delay: .2s
+        }
+
+        .hero-inner > *:nth-child(3) {
+            animation-delay: .3s
+        }
+
+        .hero-inner > *:nth-child(4) {
+            animation-delay: .4s
+        }
+
+    @@media (max-width: 900px) {
+        .content-wrapper {
+            grid-template-columns: 1fr;
+            padding: 40px 24px 80px
+        }
+
+        .sidebar {
+            position: static
+        }
+
+        .page-hero {
+            padding: 60px 24px 80px
+        }
+
+        .terms-grid {
+            grid-template-columns: 1fr
+        }
+    }
+</style>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="page-hero">
+    <div class="hero-inner">
+        <div class="page-badge">⚖️ Legal Agreement</div>
+        <h1>Terms of <em>Service</em></h1>
+        <p>Please read these Terms carefully before using Scoutix. They govern your rights and obligations when using our lead generation platform.</p>
+        <div class="meta-row">
+            <div class="meta-item"><div class="dot"></div> Effective Date: March 18, 2026</div>
+            <div class="meta-item"><div class="dot"></div> Last Updated: March 18, 2026</div>
+            <div class="meta-item"><div class="dot"></div> Operated by Muhammad Mohsin Shabbir · Islamabad, Pakistan</div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════ BODY ═══════════════ -->
+<div class="content-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sidebar-card">
+            <div class="sidebar-title">On this page</div>
+            <ul class="toc-list">
+                <li><a href="#parties">1. Parties &amp; Identification</a></li>
+                <li><a href="#description">2. Description of Service</a></li>
+                <li><a href="#eligibility">3. Eligibility</a></li>
+                <li><a href="#account">4. Account Responsibility</a></li>
+                <li><a href="#acceptable-use">5. Acceptable Use</a></li>
+                <li><a href="#data-restrictions">6. Data Use Restrictions</a></li>
+                <li><a href="#user-compliance">7. User Compliance Responsibility</a></li>
+                <li><a href="#subscription">8. Subscription &amp; Billing</a></li>
+                <li><a href="#refunds">9. Refund Policy</a></li>
+                <li><a href="#ip">10. Intellectual Property</a></li>
+                <li><a href="#third-party-disclaimer">11. Third-Party Disclaimer</a></li>
+                <li><a href="#service-changes">12. Service Modifications</a></li>
+                <li><a href="#no-warranty">13. No Warranty</a></li>
+                <li><a href="#liability">14. Limitation of Liability</a></li>
+                <li><a href="#indemnification">15. Indemnification</a></li>
+                <li><a href="#force-majeure">16. Force Majeure</a></li>
+                <li><a href="#termination">17. Termination</a></li>
+                <li><a href="#governing-law">18. Governing Law</a></li>
+                <li><a href="#modifications">19. Modifications to Terms</a></li>
+                <li><a href="#general">20. General Provisions</a></li>
+                <li><a href="#contact">21. Contact</a></li>
+            </ul>
+            <div class="sidebar-warning">
+                <p>⚠️ <strong>Key sections:</strong> §14 limits our liability. §15 is a strong indemnification clause. §16 covers force majeure. §18 sets Pakistan as the governing jurisdiction.</p>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <div class="intro-card">
+            <div class="intro-card-icon">📜</div>
+            <p>
+                <strong>Summary:</strong> Scoutix is operated by <strong>Muhammad Mohsin Shabbir</strong>, a sole proprietor based in Islamabad, Pakistan. The platform surfaces publicly available business data for legitimate B2B use only. Do not use it for spam, to resell raw data, or for any illegal purpose. Subscriptions auto-renew until cancelled. A 14-day money-back guarantee applies to first-time subscribers. These Terms are governed by the laws of Pakistan.
+            </p>
+        </div>
+
+        <!-- ─── 01 ─── -->
+        <section class="policy-section" id="parties">
+            <div class="section-number">Section 01</div>
+            <h2>Parties &amp; Identification</h2>
+            <p>These Terms of Service ("Terms") constitute a legally binding agreement between you ("User," "Subscriber," or "you") and the individual operating the Scoutix platform under the following details:</p>
+            <div class="info-box">
+                <strong>Service Operator:</strong> Muhammad Mohsin Shabbir<br>
+                <strong>Trading as:</strong> Scoutix<br>
+                <strong>Operating as:</strong> Sole proprietor — no registered company entity at this time<br>
+                <strong>Location:</strong> Islamabad, Islamic Republic of Pakistan<br>
+                <strong>Contact:</strong> support@scoutix.io
+            </div>
+            <p>All references to "Scoutix," "we," "us," or "our" throughout these Terms refer to Muhammad Mohsin Shabbir trading as Scoutix. As a sole proprietor, Muhammad Mohsin Shabbir is personally responsible for the operation of the Service and the obligations described herein.</p>
+            <p>By creating an account, completing the subscription checkout, or otherwise accessing or using the Service, you confirm that you have read, understood, and agree to be bound by these Terms and the Scoutix Privacy Policy, which is incorporated herein by reference.</p>
+        </section>
+
+        <!-- ─── 02 ─── -->
+        <section class="policy-section" id="description">
+            <div class="section-number">Section 02</div>
+            <h2>Description of Service</h2>
+            <p>Scoutix is a paid B2B Software-as-a-Service (SaaS) platform that provides lead generation tools for businesses. The core functionality enables users to search, filter, and export publicly available business information — including business names, addresses, phone numbers, websites, categories, ratings, and operational details — aggregated from publicly accessible online sources.</p>
+            <p>Additional features may include contact organization, lead management, bulk data export, and related tools designed to support legitimate business development and outreach. The Service is available exclusively as a paid subscription and is accessed via the Scoutix web application.</p>
+            <p>Scoutix is a tool to assist users in locating and organizing publicly available business contact information. It is not a database of private individual data. It does not guarantee the accuracy, currency, or completeness of the information it surfaces.</p>
+        </section>
+
+        <!-- ─── 03 ─── -->
+        <section class="policy-section" id="eligibility">
+            <div class="section-number">Section 03</div>
+            <h2>Eligibility</h2>
+            <p>To access and use Scoutix, you must: (a) be at least <strong>18 years of age</strong>; (b) have the full legal capacity to enter into a binding agreement under the laws of your jurisdiction; (c) use the Service exclusively for lawful business purposes; (d) not be located in a jurisdiction where access to or use of the Service is prohibited by applicable law; and (e) maintain a valid active paid subscription.</p>
+            <p>By registering an account, you represent and warrant that you meet all eligibility requirements stated above. Scoutix reserves the right to verify eligibility at any time and to suspend or terminate accounts that do not qualify.</p>
+        </section>
+
+        <!-- ─── 04 ─── -->
+        <section class="policy-section" id="account">
+            <div class="section-number">Section 04</div>
+            <h2>Account Responsibility</h2>
+            <p>You are solely responsible for maintaining the confidentiality of your account credentials. All activity occurring under your account — whether authorized by you or not — is your responsibility.</p>
+            <p>You agree to: (a) provide accurate, current, and complete information at registration; (b) promptly update your account information if it changes; (c) notify Scoutix immediately at support@scoutix.io if you suspect unauthorized access to your account; and (d) never share your login credentials with any third party.</p>
+            <p>Each subscription covers a single user unless your plan explicitly states otherwise. Accounts may not be shared, transferred, sold, or accessed concurrently by multiple individuals. Scoutix reserves the right to terminate accounts found to be in violation of this restriction.</p>
+            <p><strong>Electronic Communications Consent:</strong> By creating an account, you consent to receiving electronic communications from Scoutix relating to your account, billing, subscription status, and service updates. These communications form part of your contractual relationship with us and may be sent to the email address you provided at registration.</p>
+        </section>
+
+        <!-- ─── 05 ─── -->
+        <section class="policy-section" id="acceptable-use">
+            <div class="section-number">Section 05</div>
+            <h2>Acceptable Use Policy</h2>
+            <p>You agree to use Scoutix only for lawful purposes and strictly in accordance with these Terms. The following clarifies permitted and prohibited activities:</p>
+            <div class="terms-grid">
+                <div class="term-card allowed">
+                    <h4>✅ Permitted Uses</h4>
+                    <ul>
+                        <li>Searching for publicly available business information</li>
+                        <li>Exporting business leads for your own lawful outreach</li>
+                        <li>Building prospect lists for legitimate sales campaigns</li>
+                        <li>Using exported data for lawful B2B marketing</li>
+                        <li>Organizing and managing your lead pipeline</li>
+                        <li>Legitimate business development activities</li>
+                        <li>Complying with all applicable anti-spam and marketing laws</li>
+                    </ul>
+                </div>
+                <div class="term-card prohibited">
+                    <h4>🚫 Prohibited Uses</h4>
+                    <ul>
+                        <li>Sending unsolicited bulk email (spam)</li>
+                        <li>Harassing, stalking, or unlawfully contacting individuals</li>
+                        <li>Reselling or redistributing raw exported data</li>
+                        <li>Sharing or transferring account access</li>
+                        <li>Circumventing usage limits, quotas, or billing</li>
+                        <li>Any illegal purpose whatsoever</li>
+                        <li>Uploading or transmitting malware or malicious code</li>
+                        <li>Reverse-engineering, decompiling, or copying our software</li>
+                        <li>Violating data protection, anti-spam, or telemarketing laws</li>
+                        <li>Automated access beyond permitted platform use</li>
+                    </ul>
+                </div>
+            </div>
+            <p>Violation of this Acceptable Use Policy may result in immediate account suspension or termination without refund. Scoutix reserves the right to report illegal activity to relevant authorities in Pakistan or any applicable jurisdiction.</p>
+        </section>
+
+        <!-- ─── 06 ─── -->
+        <section class="policy-section" id="data-restrictions">
+            <div class="section-number">Section 06</div>
+            <h2>Data Use Restrictions</h2>
+            <p>Business data accessible through Scoutix is aggregated from publicly available online sources and provided to you solely for your own internal business use. You expressly agree that you will not:</p>
+            <p>(a) <strong>Resell raw data:</strong> You may not resell, license, sublicense, distribute, or otherwise commercialize raw exported data to any third party — in original or modified form — without prior written consent from Scoutix.</p>
+            <p>(b) <strong>Build competing products:</strong> You may not use data or platform access to build, train, populate, or support a competing lead generation database, product, or service, or to create any derivative dataset for commercial distribution.</p>
+            <p>(c) <strong>Unlawful use:</strong> You may not use exported data in any manner that violates applicable law, including sending unsolicited commercial messages, engaging in unlawful telemarketing, or targeting individuals in violation of applicable privacy or data protection law.</p>
+            <div class="highlight-box">
+                ℹ️ The Service is intended to surface business contact information. Some data may relate to sole proprietors or individuals acting in a business capacity. Users remain solely responsible for verifying data accuracy and ensuring legal compliance before conducting any outreach or marketing activity.
+            </div>
+        </section>
+
+        <!-- ─── 07 ─── -->
+        <section class="policy-section" id="user-compliance">
+            <div class="section-number">Section 07</div>
+            <h2>User Compliance Responsibility — No Guarantee by Scoutix</h2>
+            <p><strong>Scoutix makes no representation, warranty, or guarantee that your use of the platform or any data obtained through it is compliant with the laws, regulations, or third-party platform policies applicable in your jurisdiction or in the jurisdictions you target.</strong></p>
+            <p>It is your sole responsibility to:</p>
+            <p>(a) determine the lawful basis under which you may contact businesses using data exported from the platform in each jurisdiction you operate in;</p>
+            <p>(b) comply with all applicable laws and regulations — including without limitation CAN-SPAM, CASL, GDPR, PECR, and any equivalent anti-spam, telemarketing, and data protection laws applicable to your activities;</p>
+            <p>(c) obtain any required consents or authorizations before initiating outreach using exported data; and</p>
+            <p>(d) ensure your use of the data does not violate the terms of service of any third-party platform from which data may have been aggregated.</p>
+            <div class="warning-box">
+                ⚠️ Scoutix expressly disclaims all liability for any regulatory fines, penalties, legal claims, or enforcement actions brought against you as a result of your use of exported data. By subscribing, you accept full and sole responsibility for your outreach and marketing activities.
+            </div>
+            <p><strong>No Agency:</strong> Scoutix does not act as your agent, data processor, marketing intermediary, or co-sender in connection with any outreach, email campaigns, or commercial communications you conduct using data obtained through the platform. Any such activities are undertaken by you independently and solely on your own behalf.</p>
+        </section>
+
+        <!-- ─── 08 ─── -->
+        <section class="policy-section" id="subscription">
+            <div class="section-number">Section 08</div>
+            <h2>Subscription &amp; Billing</h2>
+            <h3>Subscription Plans</h3>
+            <p>Scoutix is offered as a monthly subscription service. Current plans are as follows:</p>
+            <table class="plan-table">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Monthly Price (USD)</th>
+                        <th>Auto-Renewal</th>
+                        <th>Cancel Anytime</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Starter</td>
+                        <td>$39 / month</td>
+                        <td><span class="badge-green">Yes</span></td>
+                        <td><span class="badge-green">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td>Growth</td>
+                        <td>$69 / month</td>
+                        <td><span class="badge-green">Yes</span></td>
+                        <td><span class="badge-green">Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td>Pro</td>
+                        <td>$149 / month</td>
+                        <td><span class="badge-green">Yes</span></td>
+                        <td><span class="badge-green">Yes</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Payment Processing — Paddle</h3>
+            <p>All payments are processed by Paddle (paddle.com), acting as Merchant of Record. By completing a purchase, you also agree to Paddle's Terms of Service and Privacy Policy. Scoutix does not directly handle or store your payment card information. Billing disputes relating to payment processing should be directed to Paddle in the first instance.</p>
+
+            <h3>Auto-Renewal</h3>
+            <p>All plans renew automatically at the end of each monthly billing cycle. By subscribing, you authorize Scoutix and Paddle to charge your payment method on each renewal date without further action from you. You will receive a renewal reminder email prior to each billing date.</p>
+
+            <h3>Cancellation</h3>
+            <p>You may cancel your subscription at any time through your account dashboard or by contacting support@scoutix.io. Cancellation takes effect at the end of the current billing period; you retain full platform access until that date. Scoutix does not pro-rate charges for early cancellation within a billing cycle.</p>
+
+            <h3>Uptime &amp; Availability</h3>
+            <p>Scoutix makes reasonable commercial efforts to maintain platform availability, but does not guarantee uninterrupted, continuous, or error-free operation. Planned maintenance, third-party service outages, or events beyond our reasonable control may cause temporary unavailability. No refunds or service credits are issued for downtime unless expressly agreed in writing.</p>
+
+            <h3>Price Changes</h3>
+            <p>We reserve the right to modify subscription pricing at any time with at least <strong>14 days' prior written notice</strong> by email to your registered address. Continued use of the platform after updated pricing takes effect on your account constitutes your acceptance of the revised pricing. If you do not accept the change, you must cancel your subscription before it takes effect.</p>
+        </section>
+
+        <!-- ─── 09 ─── -->
+        <section class="policy-section" id="refunds">
+            <div class="section-number">Section 09</div>
+            <h2>Refund Policy</h2>
+            <p>
+                Scoutix offers a <strong>14-day money-back guarantee</strong> for all subscribers on all plans. If you are dissatisfied for any reason, you may request a full refund within 14 calendar days of the transaction date by emailing support@scoutix.io with the subject line "Refund Request." No further justification is required.
+            </p>
+            <div class="highlight-box">
+                ✅ Refund requests submitted after the 14-day window will not be honoured. Scoutix reserves the right to decline refund requests where there is clear evidence of Terms violations or fraudulent abuse.
+            </div>
+            <p>Approved refunds are processed through Paddle and may take 5–10 business days to appear on your statement, depending on your payment method and financial institution.</p>
+        </section>
+
+        <!-- ─── 10 ─── -->
+        <section class="policy-section" id="ip">
+            <div class="section-number">Section 10</div>
+            <h2>Intellectual Property</h2>
+            <p>All intellectual property rights in the Scoutix platform — including the software, source code, user interface, database architecture, algorithms, brand assets, trademarks, and documentation — are owned exclusively by Muhammad Mohsin Shabbir trading as Scoutix, or are licensed to us by third parties. Nothing in these Terms transfers any intellectual property ownership to you.</p>
+            <p>Subject to your compliance with these Terms and maintenance of an active paid subscription, we grant you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to access and use the Service solely for your internal business purposes. This license does not permit you to copy, modify, distribute, resell, sublicense, reverse-engineer, decompile, or create derivative works based on any part of the Service.</p>
+            <p>Scoutix does not claim ownership of publicly available third-party business data surfaced through the platform.</p>
+        </section>
+
+        <!-- ─── 11 ─── -->
+        <section class="policy-section" id="third-party-disclaimer">
+            <div class="section-number">Section 11</div>
+            <h2>Third-Party Platform Disclaimer</h2>
+            <p><strong>Scoutix is a fully independent software product. It is not affiliated with, endorsed by, authorized by, partnered with, or in any way sponsored by Google LLC, Google Maps Platform, Alphabet Inc., or any other third-party platform, directory service, or data source</strong> from which publicly available business information may be aggregated as part of the Service's functionality.</p>
+            <p>All third-party platform names and trademarks referenced in connection with Scoutix's features are the exclusive property of their respective owners. Scoutix makes no claim to any rights in those marks and references them for informational purposes only.</p>
+            <p>Third-party platforms may change, restrict, or discontinue public access to data at any time without notice to Scoutix. Such changes may affect the availability or quality of data accessible through the Service, and <strong>Scoutix bears no liability for any resulting impact on your use of the platform or your business activities</strong>.</p>
+            <p>Users are responsible for independently reviewing and complying with the terms of service of any third-party platform relevant to their use of data obtained through Scoutix. Scoutix does not warrant that user activities involving exported data are permissible under any third-party platform's terms.</p>
+        </section>
+
+        <!-- ─── 12 ─── -->
+        <section class="policy-section" id="service-changes">
+            <div class="section-number">Section 12</div>
+            <h2>Service Modifications, Feature Changes &amp; Discontinuation</h2>
+            <p>Scoutix reserves the right, at any time and at our sole discretion, to:</p>
+            <p>(a) <strong>Modify features:</strong> Add, change, suspend, or remove any feature, functionality, data source, search capability, export format, or usage limit within the platform — with or without prior notice;</p>
+            <p>(b) <strong>Change data sources:</strong> Modify, add, or remove the online sources from which publicly available business data is aggregated, as dictated by technical, legal, or operational considerations outside our control;</p>
+            <p>(c) <strong>Suspend the Service:</strong> Temporarily suspend access for maintenance, upgrades, security patching, or any other operational purpose; and</p>
+            <p>(d) <strong>Discontinue the Service:</strong> Permanently discontinue the Service, in whole or in part, with reasonable notice to active subscribers where practicable.</p>
+            <div class="highlight-box">
+                ℹ️ Where a material modification or permanent discontinuation would significantly impact active subscribers, we will endeavour to provide at least <strong>14 days' prior notice</strong> by email. In the event of permanent discontinuation, pro-rated refunds of unused prepaid subscription time may be offered at our discretion.
+            </div>
+            <p>Scoutix shall not be liable to you or any third party for any modification, suspension, or discontinuation of the Service or any part thereof, except as expressly stated above.</p>
+        </section>
+
+        <!-- ─── 13 ─── -->
+        <section class="policy-section" id="no-warranty">
+            <div class="section-number">Section 13</div>
+            <h2>No Warranty</h2>
+            <p>THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR STATUTORY. TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, SCOUTIX AND MUHAMMAD MOHSIN SHABBIR EXPRESSLY DISCLAIM ALL WARRANTIES, INCLUDING WITHOUT LIMITATION ANY IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, ACCURACY, AND QUIET ENJOYMENT.</p>
+            <p>In particular, Scoutix does not warrant that: (a) the Service will operate uninterrupted or error-free; (b) any defects or errors will be corrected; (c) business data surfaced through the Service is accurate, complete, current, or suitable for your intended purpose; (d) the Service will meet your specific business requirements or produce any particular commercial result; or (e) any data source or third-party platform will remain accessible or unchanged.</p>
+            <p>You use the Service and rely on any data obtained through it entirely at your own risk.</p>
+        </section>
+
+        <!-- ─── 14 ─── -->
+        <section class="policy-section" id="liability">
+            <div class="section-number">Section 14</div>
+            <h2>Limitation of Liability</h2>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE TOTAL AGGREGATE LIABILITY OF MUHAMMAD MOHSIN SHABBIR TRADING AS SCOUTIX TO YOU FOR ANY AND ALL CLAIMS ARISING OUT OF OR RELATED TO THESE TERMS, THE SERVICE, OR YOUR USE OF DATA OBTAINED THROUGH THE SERVICE SHALL NOT EXCEED THE GREATER OF: (A) THE TOTAL AMOUNT YOU ACTUALLY PAID TO SCOUTIX IN THE THREE (3) CALENDAR MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO THE CLAIM, OR (B) USD $100 — WHICHEVER IS HIGHER.</p>
+            <div class="warning-box">
+                ⚠️ IN NO EVENT SHALL SCOUTIX OR MUHAMMAD MOHSIN SHABBIR BE LIABLE FOR: (A) INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES; (B) LOSS OF PROFITS, REVENUE, BUSINESS OPPORTUNITIES, OR ANTICIPATED SAVINGS; (C) LOSS OR CORRUPTION OF DATA; (D) REPUTATIONAL HARM OR LOSS OF GOODWILL; (E) REGULATORY FINES, PENALTIES, OR ENFORCEMENT COSTS ARISING FROM YOUR USE OF EXPORTED DATA; OR (F) CLAIMS BY THIRD PARTIES ARISING FROM YOUR OUTREACH OR MARKETING ACTIVITIES — EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+            </div>
+            <p><strong>Data Accuracy:</strong> Scoutix specifically excludes all liability for any loss, claim, damage, or expense arising from your reliance on the accuracy, completeness, or currency of any business data surfaced through the platform. All such data is sourced from publicly available third-party sources over which Scoutix has no control.</p>
+            <p><strong>Third-Party Claims:</strong> Scoutix excludes all liability for claims brought against you by third parties — including data subjects, regulatory authorities, or other businesses — arising from your use of data obtained through the platform.</p>
+            <p>This limitation applies regardless of the legal theory under which any claim is brought: contract, tort, strict liability, or otherwise. Where applicable law does not permit the exclusion or limitation of certain damages, our liability shall be limited to the maximum extent permitted.</p>
+        </section>
+
+        <!-- ─── 15 ─── -->
+        <section class="policy-section" id="indemnification">
+            <div class="section-number">Section 15</div>
+            <h2>Indemnification</h2>
+            <p>You agree to indemnify, defend at your own expense, and hold harmless Muhammad Mohsin Shabbir trading as Scoutix and any associated contractors, agents, and service providers ("Indemnified Parties") from and against any and all claims, demands, actions, proceedings, damages, liabilities, losses, costs, fines, penalties, and expenses (including reasonable legal and regulatory defence fees) arising out of or relating to:</p>
+            <p>(a) your use of the Service in breach of these Terms or any applicable law or regulation;</p>
+            <p>(b) <strong>spam, unsolicited commercial communications, or unlawful outreach</strong> conducted using data obtained through the platform — including any regulatory complaints, investigations, enforcement actions, or fines issued by data protection authorities (including but not limited to the ICO, FTC, CRTC, or any EU/EEA supervisory authority) in connection with your activities;</p>
+            <p>(c) your violation of any anti-spam, telemarketing, or data protection law, including CAN-SPAM, CASL, GDPR, PECR, or any equivalent applicable regulation;</p>
+            <p>(d) any claim by a third party — including data subjects, other businesses, or platform operators — arising from your use of data obtained through Scoutix;</p>
+            <p>(e) your use of the platform in violation of any third-party platform's terms of service or policies;</p>
+            <p>(f) any content, data, or materials you submit through the Service; and</p>
+            <p>(g) any misrepresentation of your eligibility, identity, or intended use of the Service at registration or at any time thereafter.</p>
+            <div class="warning-box">
+                ⚠️ This indemnification obligation survives termination or expiry of your subscription and these Terms. Scoutix reserves the right to assume exclusive control of the defence of any indemnifiable matter at your expense, in which case you agree to cooperate fully and promptly.
+            </div>
+        </section>
+
+        <!-- ─── 16 ─── -->
+        <section class="policy-section" id="force-majeure">
+            <div class="section-number">Section 16</div>
+            <h2>Force Majeure</h2>
+            <p>Scoutix shall not be in breach of these Terms, and shall not be liable for any delay, degradation, or failure in performance, where such delay or failure arises from causes beyond our reasonable control ("Force Majeure Event"), including but not limited to:</p>
+            <p>(a) acts of God, natural disasters, floods, fires, or extreme weather; (b) acts of government, changes in law or regulation, sanctions, or export restrictions; (c) internet infrastructure failures, widespread network outages, or cyberattacks including distributed denial-of-service (DDoS) attacks; (d) failures or disruptions by third-party service providers, including cloud hosting providers, payment processors, or data sources; (e) pandemics, epidemics, or public health emergencies declared by a competent authority; or (f) civil unrest, war, terrorism, or strikes.</p>
+            <p>In the event of a Force Majeure Event, Scoutix will use reasonable efforts to notify affected subscribers and restore the Service as promptly as practicable. Subscription billing may continue during a Force Majeure Event unless the Service is unavailable for a continuous period exceeding <strong>7 days</strong>, after which affected subscribers may contact support@scoutix.io to request a prorated billing credit. No automatic refunds are triggered by Force Majeure Events.</p>
+        </section>
+
+        <!-- ─── 17 ─── -->
+        <section class="policy-section" id="termination">
+            <div class="section-number">Section 17</div>
+            <h2>Right to Suspend or Terminate Accounts</h2>
+            <h3>Termination by You</h3>
+            <p>You may cancel your subscription at any time through your account dashboard or by emailing support@scoutix.io. Access continues until the end of the current paid billing period. Cancellation does not entitle you to a refund except as provided in Section 9.</p>
+
+            <h3>Suspension or Termination by Scoutix</h3>
+            <p>Scoutix reserves the right to suspend or permanently terminate your account immediately and without prior notice, with no refund obligation, if we reasonably determine that you have:</p>
+            <p>(a) materially breached any provision of these Terms; (b) used the platform to send spam, unsolicited bulk email, or unlawful commercial communications; (c) engaged in illegal, abusive, or fraudulent conduct in connection with the Service; (d) provided false or misleading registration information; (e) failed to pay applicable subscription fees within 7 days of a failed payment notification; (f) used the platform in a manner that exposes Scoutix or Muhammad Mohsin Shabbir to legal liability, regulatory risk, or reputational harm; or (g) otherwise violated the Acceptable Use Policy in Section 5.</p>
+            <p>Where circumstances reasonably permit, we will provide notice before taking action. Upon termination, your license to use the Service ends immediately. You may export your account data within 30 days of termination, after which all account data will be permanently deleted in accordance with the Privacy Policy.</p>
+        </section>
+
+        <!-- ─── 18 ─── -->
+        <section class="policy-section" id="governing-law">
+            <div class="section-number">Section 18</div>
+            <h2>Governing Law &amp; Jurisdiction</h2>
+            <p>These Terms of Service shall be governed by and construed in accordance with the laws of the <strong>Islamic Republic of Pakistan</strong> — including the Contract Act 1872, the Electronic Transactions Ordinance 2002, and the Prevention of Electronic Crimes Act (PECA) 2016 — without regard to conflict of law principles.</p>
+            <p>Any dispute arising out of or in connection with these Terms or the Service that cannot be resolved informally shall be subject to the exclusive jurisdiction of the civil courts of <strong>Islamabad, Pakistan</strong>. Where mandatory consumer protection laws of your jurisdiction confer rights that cannot be contractually excluded, those rights are preserved to the extent required by law.</p>
+            <p>Prior to initiating any formal legal proceedings, both parties agree to make a genuine good-faith effort to resolve the dispute through written correspondence to support@scoutix.io for a minimum of <strong>30 days</strong>.</p>
+        </section>
+
+        <!-- ─── 19 ─── -->
+        <section class="policy-section" id="modifications">
+            <div class="section-number">Section 19</div>
+            <h2>Modifications to Terms</h2>
+            <p>Scoutix reserves the right to update or modify these Terms of Service at any time. Material changes will be communicated to all registered users via email to the address on file at least <strong>14 days</strong> before the updated Terms take effect.</p>
+            <p>Your continued use of the Service after the effective date of updated Terms constitutes your acceptance of the revised Terms. If you do not agree, you must cancel your subscription before the effective date. All previous versions of these Terms are archived and available upon request by emailing support@scoutix.io.</p>
+        </section>
+
+        <!-- ─── 20 ─── -->
+        <section class="policy-section" id="general">
+            <div class="section-number">Section 20</div>
+            <h2>General Provisions</h2>
+            <p><strong>Entire Agreement:</strong> These Terms, together with the Privacy Policy and any subscription order confirmation, constitute the entire agreement between you and Scoutix regarding the Service and supersede all prior representations, understandings, or agreements.</p>
+            <p><strong>Severability:</strong> If any provision of these Terms is found invalid, unlawful, or unenforceable, that provision shall be modified to the minimum extent necessary to make it enforceable, or severed if modification is not possible, without affecting the remaining provisions.</p>
+            <p><strong>No Waiver:</strong> Scoutix's failure to enforce any right or provision on any occasion does not constitute a waiver of that right or provision on any future occasion.</p>
+            <p><strong>Assignment:</strong> You may not assign, transfer, or delegate your rights or obligations under these Terms without Scoutix's prior written consent. Scoutix may assign these Terms in connection with a business transfer or restructuring, with notice to you.</p>
+            <p><strong>No Partnership:</strong> Nothing in these Terms creates a partnership, joint venture, agency, franchise, or employment relationship between you and Scoutix.</p>
+            <p><strong>Survival:</strong> Sections 6, 7, 10, 13, 14, 15, 18, and 20 shall survive termination or expiry of your subscription and remain in full force and effect.</p>
+        </section>
+
+        <!-- ─── 21 ─── -->
+        <section class="policy-section" id="contact">
+            <div class="section-number">Section 21</div>
+            <h2>Contact Information</h2>
+            <div class="contact-card">
+                <h3>Questions or Legal Notices?</h3>
+                <p>For questions about these Terms, billing matters, or formal legal notices, please contact the Service operator directly. We aim to respond within 3–5 business days.</p>
+                <div class="contact-methods">
+                    <div class="contact-method">👤 <span>Muhammad Mohsin Shabbir</span></div>
+                    <div class="contact-method">✉ <span>support@scoutix.io</span></div>
+                    <div class="contact-method">📍 <span>Islamabad, Pakistan</span></div>
+                    <div class="contact-method">⏱ <span>Response: 3–5 business days</span></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>

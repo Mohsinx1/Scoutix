@@ -1,0 +1,175 @@
+﻿@model UserViewModel
+
+@{
+    Layout = "_VisitorLayout";
+    ViewData["Title"] = "Sign Up";
+}
+
+<!-- Sign Up Section -->
+<section class="auth-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <img src="~/images/logo.png" alt="Scoutix" style="height: 48px; vertical-align: middle;" />
+
+                        <h2 class="auth-title">Create your account</h2>
+                        <p class="auth-description">Get started with ease and simplicity.</p>
+                    </div>
+
+                    <form id="signupForm" class="auth-form" method="post" asp-action="SignUp" asp-controller="Account" autocomplete="off">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        @if (TempData["ShowLoginLinks"] != null)
+                        {
+                            <div class="auth-alternative" style="margin-bottom: 1rem;">
+                                <a href="/Account/Login">Log in to your account</a>
+                                <span style="color: #9CA3AF;"> &nbsp;·&nbsp; </span>
+                                <a href="/Account/ForgotPassword">Forgot your password?</a>
+                            </div>
+                        }
+                        <input type="hidden" asp-for="PlanId" />
+
+                        <div class="form-group">
+                            <label asp-for="UserName" class="form-label">User Name</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-person-fill"></i>
+                                <input asp-for="UserName" class="form-control" placeholder="John Doe" required autocomplete="off">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="Email" class="form-label">Email Address</label>
+                                <div class="input-with-icon">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    <input asp-for="Email" class="form-control" placeholder="you@example.com" required autocomplete="off">
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="Password" class="form-label">Password</label>
+                                    <div class="input-with-icon">
+                                        <i class="bi bi-lock-fill"></i>
+                                        <input asp-for="Password" type="password" class="form-control" placeholder="Min. 8 characters" required autocomplete="off">
+                                            <button type="button" class="toggle-password" onclick="togglePassword('Password')">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </button>
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                        <div class="password-strength" id="passwordStrength"></div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                                        <div class="input-with-icon">
+                                            <i class="bi bi-lock-fill"></i>
+                                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Re-enter password" required autocomplete="off">
+                                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="checkbox-container">
+                                                <input asp-for="AgreeToTerms" type="checkbox" required autocomplete="off">
+                                                    <span class="checkmark"></span>
+                                                    <span class="checkbox-label">
+                                                        I agree to the <a asp-action="TermsOfService" asp-controller="Account" target="_blank">Terms of Service</a> and
+                                                        <a asp-action="PrivacyPolicy" asp-controller="Account" target="_blank">Privacy Policy</a>
+                                                    </span>
+                                                </label>
+                                                <span asp-validation-for="AgreeToTerms" class="text-danger"></span>
+                                            </div>
+
+                                            <button type="submit" class="btn-auth-primary">
+                                                Create Account
+                                                <i class="bi bi-arrow-right ms-2"></i>
+                                            </button>
+
+                                            <div class="auth-divider">
+                                                <span>or</span>
+                                            </div>
+
+                                            <div class="auth-alternative">
+                                                Already have an account? <a href="/Account/Login">Sign in</a>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <div class="auth-features">
+                                        <div class="auth-feature-item">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            <span>Plans from $39/month</span>
+                                        </div>
+                                        <div class="auth-feature-item">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            <span>Cancel anytime</span>
+                                        </div>
+                                        <div class="auth-feature-item">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            <span>Visa & Mastercard accepted</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <script>
+                        function togglePassword(inputId) {
+                            const input = document.getElementById(inputId);
+                            const button = event.currentTarget;
+                            const icon = button.querySelector('i');
+
+                            if (input.type === 'password') {
+                                input.type = 'text';
+                                icon.classList.remove('bi-eye-fill');
+                                icon.classList.add('bi-eye-slash-fill');
+                            } else {
+                                input.type = 'password';
+                                icon.classList.remove('bi-eye-slash-fill');
+                                icon.classList.add('bi-eye-fill');
+                            }
+                        }
+
+                        // Password strength indicator
+                        document.getElementById('Password').addEventListener('input', function() {
+                            const password = this.value;
+                            const strengthDiv = document.getElementById('passwordStrength');
+
+                            if (password.length === 0) {
+                                strengthDiv.innerHTML = '';
+                                return;
+                            }
+
+                            let strength = 0;
+                            if (password.length >= 8) strength++;
+                            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+                            if (password.match(/[0-9]/)) strength++;
+                            if (password.match(/[^a-zA-Z0-9]/)) strength++;
+
+                            const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+                            const colors = ['#ef4444', '#f59e0b', '#10b981', '#059669'];
+
+                            strengthDiv.innerHTML = `<div class="strength-bar strength-${strength}"></div><span style="color: ${colors[strength - 1]}">${labels[strength - 1]}</span>`;
+                        });
+
+                        // Confirm password validation
+                        document.getElementById('signupForm').addEventListener('submit', function(e) {
+                            const password = document.getElementById('Password').value;
+                            const confirmPassword = document.getElementById('ConfirmPassword').value;
+
+                            if (password !== confirmPassword) {
+                                e.preventDefault();
+                                  iziToast.error({
+                                      title: 'Error',
+                                      message: 'Passwords do not match!',
+                                      position: 'topCenter', // Position of the toast
+                                      timeout: 3000, // Duration in ms
+                                      transitionIn: 'fadeIn', // Animation type when appearing
+                                      transitionOut: 'fadeOut', // Animation type when disappearing
+                                  });
+                            }
+                        });
+                    </script>

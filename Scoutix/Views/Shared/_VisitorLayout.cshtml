@@ -1,0 +1,309 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <meta name="google-site-verification" content="P7j9v27t0zXBRp__YgUCCP6iOOZy2HZvLWJjiBHGnkg" />
+    <meta name="description" content="@(ViewData["Description"] ?? "Scoutix is a lead intelligence platform that discovers verified local business prospects and manages your entire sales pipeline in one place.")" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://scoutix.io@(Context.Request.Path)" />
+    <meta property="og:title" content="@ViewData["Title"] | Scoutix" />
+    <meta property="og:description" content="@(ViewData["Description"] ?? "Scoutix is a lead intelligence platform that discovers verified local business prospects and manages your entire sales pipeline in one place.")" />
+    <meta property="og:url" content="https://scoutix.io@(Context.Request.Path)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Scoutix" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="@ViewData["Title"] | Scoutix" />
+    <meta name="twitter:description" content="@(ViewData["Description"] ?? "Scoutix is a lead intelligence platform that discovers verified local business prospects and manages your entire sales pipeline in one place.")" />
+    <title>@ViewData["Title"] | Scoutix</title>
+
+    @* Structured data (JSON-LD) — helps AI assistants (ChatGPT, Claude, Perplexity, Gemini)
+       and search engines understand what Scoutix is, who runs it, and what it costs. *@
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "Organization",
+      "name": "Scoutix",
+      "alternateName": "Scoutix.io",
+      "url": "https://scoutix.io",
+      "logo": "https://scoutix.io/images/navbarLogo.png",
+      "description": "Scoutix is a B2B lead generation and CRM platform that discovers verified local business prospects from public business directories, enriches them with contact data, and manages your entire sales pipeline in one place.",
+      "foundingDate": "2025",
+      "sameAs": [
+        "https://www.linkedin.com/company/scoutix/",
+        "https://x.com/scoutixio",
+        "https://www.instagram.com/scoutix.io"
+      ],
+      "contactPoint": {
+        "@@type": "ContactPoint",
+        "email": "hello@@scoutix.io",
+        "contactType": "Customer Support",
+        "availableLanguage": ["English"]
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "WebSite",
+      "name": "Scoutix",
+      "url": "https://scoutix.io",
+      "publisher": { "@@type": "Organization", "name": "Scoutix" }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "SoftwareApplication",
+      "name": "Scoutix",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Lead Generation Software, CRM",
+      "operatingSystem": "Web Browser",
+      "url": "https://scoutix.io",
+      "description": "B2B lead intelligence platform for sales teams, agencies, and freelancers. Discover verified local business prospects with name, phone, website, and address — then manage them in a built-in CRM.",
+      "featureList": [
+        "Local business lead discovery",
+        "Verified business contact data (name, phone, website, address)",
+        "Built-in CRM with lead status tracking",
+        "Follow-up reminders",
+        "Advanced CRM filters",
+        "CSV export",
+        "City, state, and country-level search"
+      ],
+      "offers": [
+        {
+          "@@type": "Offer",
+          "name": "Starter",
+          "price": "39",
+          "priceCurrency": "USD",
+          "category": "Monthly Subscription",
+          "description": "$39/month — 800 leads per month, city-level searches, built-in CRM, email enrichment, lead status tracking"
+        },
+        {
+          "@@type": "Offer",
+          "name": "Growth",
+          "price": "69",
+          "priceCurrency": "USD",
+          "category": "Monthly Subscription",
+          "description": "$69/month — 3,000 leads per month, state-level searches, advanced CRM filters, email enrichment, follow-up reminders, CSV export, priority queue"
+        },
+        {
+          "@@type": "Offer",
+          "name": "Pro",
+          "price": "149",
+          "priceCurrency": "USD",
+          "category": "Monthly Subscription",
+          "description": "$149/month — 8,000 leads per month, country-level searches, fastest generation speed, email enrichment, highest priority queue, early access to new features"
+        }
+      ],
+      "creator": { "@@type": "Organization", "name": "Scoutix" }
+    }
+    </script>
+
+    @* JQuery on top cuz why not!!!*@
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @* Toast *@
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+    <!-- Google Fonts - Inter for modern, clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" />
+
+    <!-- Custom Styles -->
+    @*     <link rel="stylesheet" href="~/Scoutix.styles.css" asp-append-version="true" />
+ *@
+    <link rel="stylesheet" href="~/css/visiterlayout.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/auth.css" asp-append-version="true" />
+
+    <!-- Additional Page-Specific Styles -->
+    @RenderSection("Styles", required: false)
+</head>
+
+<body>
+    <!-- Modern Navbar -->
+    <header>
+        <nav class="navbar navbar-expand-lg modern-navbar fixed-top">
+            <div class="container">
+                <a class="navbar-brand-modern" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/navbarLogo.png" alt="Scoutix" style="height: 36px;" />
+                </a>
+
+                <!-- Mobile View Toggle Button -->
+                <button class="navbar-toggler navbar-toggler-modern" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navbar Links -->
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-lg-center">
+                        <li class="nav-item">
+                            <a class="nav-link-modern" href="/#features">Features</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-modern" href="/#pricing">Pricing</a>
+                        </li>
+                       @*  <li class="nav-item">
+                            <a class="nav-link-modern" href="#testimonials">Customers</a>
+                        </li> *@
+                        <li class="nav-item">
+                            <a class="nav-link-modern" href="/#contact">Contact</a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <a class="btn-demo-modern" href="/#contact">
+                                <i class="bi bi-camera-video me-1"></i> Request a Demo
+                            </a>
+                        </li>
+                        <li class="nav-item ms-lg-3">
+                            <a class="btn-outline-modern" href="/Account/Login">Login</a>
+                        </li>
+                        <li class="nav-item ms-lg-2">
+                            <a class="btn-primary-modern" href="/Account/SignUp">Get Started</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Wrapper -->
+    <div class="gm-shell">
+        <div class="gm-content">
+            <main role="main" id="app-main">
+                @RenderBody() <!-- Content of the specific page will be rendered here -->
+            </main>
+        </div>
+    </div>
+
+    <!-- Modern Footer -->
+    <footer class="modern-footer">
+        <div class="container">
+            <div class="row">
+                <!-- Brand Column -->
+                <div class="col-lg-4 col-md-6 footer-section">
+                    <div class="footer-brand">
+                        SCOUTIX
+                    </div>
+                    <p class="footer-description">
+                        Transform your lead generation and management with powerful automation and insights designed for modern businesses.
+                    </p>
+                </div>
+
+                <!-- Product Column -->
+                <div class="col-lg-2 col-md-6 footer-section">
+                    <h6 class="footer-title">Product</h6>
+                    <a href="/#features" class="footer-link">Features</a>
+                    <a href="/#pricing" class="footer-link">Pricing</a>
+                </div>
+
+                <!-- Company Column -->
+                <div class="col-lg-2 col-md-6 footer-section">
+                    <h6 class="footer-title">Company</h6>
+                    <a href="/#contact" class="footer-link">Contact</a>
+                </div>
+
+                <!-- Legal Column -->
+                <div class="col-lg-2 col-md-6 footer-section">
+                    <h6 class="footer-title">Legal</h6>
+                    <a asp-action="PrivacyPolicy" asp-controller="Account" target="_blank" class="footer-link">Privacy Policy</a>
+                    <a asp-action="TermsOfService" asp-controller="Account" target="_blank" class="footer-link">Terms Of Service</a>                   
+                </div>
+
+                <!-- Social Column -->
+                <div class="col-lg-2 col-md-6 footer-section">
+                    <h6 class="footer-title">Connect</h6>
+                    <a href="https://www.linkedin.com/company/scoutix/" target="_blank" class="footer-link">LinkedIn</a>
+                    <a href="https://x.com/scoutixio" target="_blank" class="footer-link">Twitter</a>
+                    <a href="https://www.instagram.com/scoutix.io" target="_blank" class="footer-link">Instagram</a>
+                </div>
+            </div>
+
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <div class="footer-copyright">
+                    � 2026 Scoutix. All rights reserved.
+                </div>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/company/scoutix/" target="_blank" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    <a href="https://x.com/scoutixio" target="_blank" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+                    <a href="https://www.instagram.com/scoutix.io" target="_blank" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    @* Toast *@
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+ 
+    <!-- Bootstrap JS -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Scripts -->
+    @*     <script src="~/js/visitor-layout.js" asp-append-version="true"></script>
+ *@   
+    <script>
+        // Check if there's a message and type in TempData
+        $(document).ready(function () {
+            // Get message and type from TempData (assuming TempData is passed from controller)
+            var message = '@TempData["Message"]';
+            var messageType = '@TempData["MessageType"]';
+
+            // If message exists, show toast notification
+            if (message && messageType) {
+                // Show toast based on the type
+                iziToast[messageType]({
+                    title: messageType.charAt(0).toUpperCase() + messageType.slice(1),
+                    message: message,
+                    position: 'topCenter', // Position of the toast
+                    timeout: 3000, // Duration in ms
+                    transitionIn: 'fadeIn', // Animation type when appearing
+                    transitionOut: 'fadeOut', // Animation type when disappearing
+                });
+            }
+        });
+    </script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.modern-navbar');
+            if (navbar && window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else if (navbar) {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Page-Specific Scripts -->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

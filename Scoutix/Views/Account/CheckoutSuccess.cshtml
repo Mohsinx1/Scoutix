@@ -1,0 +1,330 @@
+﻿@{
+    Layout = "_VisitorLayout";
+    ViewData["Title"] = "Welcome to Scoutix";
+}
+
+<!-- Success Section -->
+<section class="success-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="success-card">
+                    <div class="success-animation">
+                        <div class="success-checkmark">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                    </div>
+
+                    <h1 class="success-title">Welcome to Scoutix! 🎉</h1>
+                    <p class="success-description">
+                        Your subscription is now active. You're ready to start finding verified business leads.
+                    </p>
+
+                    <div class="success-details-box">
+                        <h3>What happens next?</h3>
+                        <div class="success-steps">
+                            <div class="success-step">
+                                <div class="step-icon">
+                                    <i class="bi bi-envelope-check-fill"></i>
+                                </div>
+                                <div class="step-content">
+                                    <h5>Check your email</h5>
+                                    <p>We've sent you a confirmation email with your subscription details.</p>
+                                </div>
+                            </div>
+
+                            <div class="success-step">
+                                <div class="step-icon">
+                                    <i class="bi bi-lightning-charge-fill"></i>
+                                </div>
+                                <div class="step-content">
+                                    <h5>Generate your first leads</h5>
+                                    <p>Pick a niche, select a location, and let Scoutix find verified business leads for you instantly.</p>
+                                </div>
+                            </div>
+
+                            <div class="success-step">
+                                <div class="step-icon">
+                                    <i class="bi bi-kanban-fill"></i>
+                                </div>
+                                <div class="step-content">
+                                    <h5>Manage with built-in CRM</h5>
+                                    <p>Track lead status, add notes, and set follow-up dates — all in one place.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-actions">
+                        <a asp-controller="Leads" asp-action="GenerateLeads" class="btn-success-primary">
+                            <i class="bi bi-lightning-charge-fill me-2"></i>
+                            Generate Your First Leads
+                        </a>
+                        <a asp-controller="Leads" asp-action="Dashboard" class="btn-success-secondary">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            Go to Dashboard
+                        </a>
+                    </div>
+
+                    <div class="success-help">
+                        <p>
+                            <i class="bi bi-question-circle-fill me-2"></i>
+                            Need help? <a href="/Contact">Contact Support</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .success-section {
+        padding: 120px 0 80px;
+        background: linear-gradient(135deg, #F0FDF4 0%, #D1FAE5 100%);
+        min-height: calc(100vh - 80px);
+    }
+
+    .success-card {
+        background: white;
+        padding: 4rem 3rem;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        text-align: center;
+    }
+
+    .success-animation {
+        margin-bottom: 2rem;
+    }
+
+    .success-checkmark {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        animation: scaleIn 0.6s ease;
+    }
+
+        .success-checkmark i {
+            font-size: 4rem;
+            color: white;
+        }
+
+    @@keyframes scaleIn {
+        from
+
+    {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    }
+
+    .success-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: #1A1A1A;
+        margin-bottom: 1rem;
+    }
+
+    .success-description {
+        font-size: 1.125rem;
+        color: #6B7280;
+        margin-bottom: 3rem;
+    }
+
+    .success-details-box {
+        background: #F9FAFB;
+        padding: 2.5rem;
+        border-radius: 16px;
+        margin-bottom: 2.5rem;
+        text-align: left;
+    }
+
+        .success-details-box h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1A1A1A;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+    .success-steps {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .success-step {
+        display: flex;
+        gap: 1.25rem;
+    }
+
+    .step-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #059669 0%, #047857 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+        .step-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+    .step-content h5 {
+        font-size: 1.125rem;
+        font-weight: 700;
+        color: #1A1A1A;
+        margin-bottom: 0.375rem;
+    }
+
+    .step-content p {
+        font-size: 0.95rem;
+        color: #6B7280;
+        margin: 0;
+    }
+
+    .subscription-summary {
+        background: linear-gradient(135deg, #064E3B 0%, #065F46 100%);
+        padding: 2rem;
+        border-radius: 16px;
+        margin-bottom: 2.5rem;
+    }
+
+    .summary-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.875rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+    .summary-label {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+    }
+
+    .summary-value {
+        color: white;
+        font-weight: 700;
+        font-size: 1rem;
+    }
+
+    .success-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-success-primary {
+        background: #059669;
+        color: white;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success-primary:hover {
+            background: #047857;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+            color: white;
+        }
+
+    .btn-success-secondary {
+        background: white;
+        color: #059669;
+        border: 2px solid #059669;
+        padding: 1rem 2.5rem;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 1.05rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        transition: all 0.3s ease;
+    }
+
+        .btn-success-secondary:hover {
+            background: #059669;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+    .success-help {
+        padding-top: 2rem;
+        border-top: 1px solid #E5E7EB;
+    }
+
+        .success-help p {
+            font-size: 0.95rem;
+            color: #6B7280;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .success-help i {
+            color: #059669;
+            font-size: 1.125rem;
+        }
+
+        .success-help a {
+            color: #059669;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 0 0.25rem;
+        }
+
+            .success-help a:hover {
+                text-decoration: underline;
+            }
+
+    @@media (max-width: 768px) {
+        .success-card
+
+    {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .success-title {
+        font-size: 2rem;
+    }
+
+    .success-actions {
+        flex-direction: column;
+    }
+
+    .btn-success-primary,
+    .btn-success-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    }
+</style>

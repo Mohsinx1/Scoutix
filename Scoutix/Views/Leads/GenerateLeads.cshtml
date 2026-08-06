@@ -1,0 +1,409 @@
+﻿@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Generate Leads";
+    Layout = "_UserLayout";
+    var antiforgeryToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+    int? selectedCountryId = ViewBag.SelectedCountryId as int?;
+    int? selectedStateId = ViewBag.SelectedStateId as int?;
+    int? selectedCityId = ViewBag.SelectedCityId as int?;
+    string niche = ViewBag.SearchedKeyword as string ?? "";
+    int? requiredLeads = ViewBag.RequiredLeads;
+}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title-section">
+            <h1 class="page-title">
+                <i class="bi bi-lightning-charge-fill me-2"></i>
+                Generate Leads
+            </h1>
+            <p class="page-description">
+                Find verified business leads from public directories by city and niche.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Generate Leads Card -->
+<div class="generate-card">
+    <div class="generate-card-header">
+        <div class="header-content">
+            <h2 class="header-title">
+                <i class="bi bi-search me-2"></i>
+                Search for Leads
+            </h2>
+            <p class="header-description">
+                Enter your target niche and location. We'll find verified businesses in real-time.
+            </p>
+        </div>
+        <div class="header-badge">
+            <i class="bi bi-lightning-charge-fill me-1"></i>
+            <span>Real-time Results</span>
+        </div>
+    </div>
+
+    <div class="generate-card-body">
+        <form asp-action="GenerateLeads"
+              asp-controller="Leads"
+              method="post"
+              class="generate-form"
+              id="generateLeadsForm">
+            @Html.AntiForgeryToken()
+
+            <!-- Form Grid -->
+            <div class="form-grid">
+                <!-- Niche Dropdown -->
+                <div class="form-field  ">
+                    <label class="field-label">
+                        <i class="bi bi-tag-fill me-1"></i>
+                        Business Type / Niche
+                    </label>
+                    <div class="input-wrapper">
+                        <select id="nicheSelect"
+                                name="nicheId"
+                                class="field-select"
+                                required>
+                            <option value="">Select a niche</option>
+                            <!-- Options will be populated dynamically using JavaScript -->
+                        </select>
+                    </div>
+                </div>
+                <!-- Country -->
+                <div class="form-field">
+                    <label class="field-label">
+                        <i class="bi bi-globe me-1"></i>
+                        Country
+                    </label>
+                    <div class="input-wrapper">
+                        <select id="countrySelect"
+                                name="countryId"
+                                class="field-select"
+                                data-selected="@(selectedCountryId?.ToString() ?? "")"
+                                required>
+                            <option value="">Select country</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- State / Region -->
+                <div class="form-field">
+                    <label class="field-label">
+                        <i class="bi bi-map me-1"></i>
+                        State / Region
+                    </label>
+                    <div class="input-wrapper">
+                     
+                        <select id="stateSelect"
+                                name="stateId"
+                                class="field-select"
+                                data-selected="@(selectedStateId?.ToString() ?? "")"
+                                disabled>
+                            <option value="">Select state/region</option>
+                        </select>
+                    </div>
+                    @if (ViewBag.MaxGeographyScope == "City")
+                    {
+                        <div class="field-hint">
+                            <i class="bi bi-info-circle me-1"></i>
+                            City selection required on your Starter plan
+                        </div>
+                    }
+                </div>
+
+                <!-- City -->
+                <div class="form-field">
+                    <label class="field-label">
+                        <i class="bi bi-building me-1"></i>
+                        City
+                    </label>
+                    <div class="input-wrapper">
+                       
+                        <select id="citySelect"
+                                name="cityId"
+                                class="field-select"
+                                data-selected="@(selectedCityId?.ToString() ?? "")"
+                                disabled>
+                            <option value="">Select city</option>
+                        </select>
+                    </div>
+                    @if (ViewBag.MaxGeographyScope == "State")
+                    {
+                        <div class="field-hint">
+                            <i class="bi bi-info-circle me-1"></i>
+                            State selection required on your Growth plan
+                        </div>
+                    }
+                </div>
+                <!-- Number of Leads -->
+                <div class="form-field">
+                    <label class="field-label">
+                        <i class="bi bi-hash me-1"></i>
+                        Number of Leads
+                    </label>
+                    <div class="input-wrapper">
+                        <div class="input-icon">
+                            <i class="bi bi-collection"></i>
+                        </div>
+                        <input type="number"
+                               name="reqLeads"
+                               class="field-input"
+                               placeholder="50"
+                               value="@requiredLeads"
+                               min="1"
+                               max="500"
+                               required />
+                    </div>
+                    <div class="field-hint">
+                        <i class="bi bi-info-circle me-1"></i>
+                        Max @(ViewBag.MaxGeographyScope == "City" ? "50" : ViewBag.MaxGeographyScope == "State" ? "200" : "500") leads per search (@ViewBag.PlanName plan)
+                    </div>
+                </div>
+            </div>
+           
+            <!-- Submit Button -->
+            <div class="form-actions">
+                <button type="submit" class="btn-generate" id="gmGenerateBtn">
+                    <span class="btn-icon">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                    </span>
+                    <span class="btn-text">Generate Leads Now</span>
+                    <span class="btn-shimmer"></span>
+                </button>
+                <div class="form-info">
+                    <i class="bi bi-shield-check me-1"></i>
+                    Results appear instantly if available, or run in the background while you work.
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Generate Leads Confirmation Modal -->
+<div class="modal fade" id="generateConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content export-modal-content">
+            <div class="modal-header export-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div class="export-modal-icon">
+                        <i class="bi bi-lightning-charge-fill"></i>
+                    </div>
+                    <h5 class="modal-title" style="font-weight: 700; color: var(--text-dark); margin: 0;">Confirm Lead Generation</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body export-modal-body">
+                <p style="color: var(--text-gray); font-size: 0.9375rem; margin-bottom: 1rem;" id="generateConfirmText"></p>
+                <div class="export-modal-warning">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span id="generateConfirmQuota"></span>
+                </div>
+            </div>
+            <div class="modal-footer export-modal-footer">
+                <button type="button" class="btn-modal-cancel" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn-generate-leads" id="generateConfirmOk" style="padding: 0.75rem 1.5rem; font-size: 0.9rem;">
+                    <i class="bi bi-lightning-charge-fill me-2"></i>
+                    Generate Now
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Info Cards -->
+<div class="info-cards-grid">
+    <div class="info-card">
+        <div class="info-card-icon green">
+            <i class="bi bi-check-circle-fill"></i>
+        </div>
+        <h3 class="info-card-title">Verified Data</h3>
+        <p class="info-card-text">
+            Get business names, phone numbers, websites, and addresses from public sources.
+        </p>
+    </div>
+
+    <div class="info-card">
+        <div class="info-card-icon gold">
+            <i class="bi bi-lightning-charge-fill"></i>
+        </div>
+        <h3 class="info-card-title">Instant Results</h3>
+        <p class="info-card-text">
+            Leads start appearing within seconds. Large searches run in the background while you continue working.
+        </p>
+    </div>
+
+    <div class="info-card">
+        <div class="info-card-icon dark">
+            <i class="bi bi-kanban"></i>
+        </div>
+        <h3 class="info-card-title">Built-in CRM</h3>
+        <p class="info-card-text">
+            All leads are automatically saved to your CRM for tracking and follow-ups.
+        </p>
+    </div>
+</div>
+
+<!-- Usage Tips -->
+<div class="tips-section">
+    <h3 class="tips-title">
+        <i class="bi bi-lightbulb-fill me-2"></i>
+        Tips for Better Results
+    </h3>
+    <div class="tips-grid">
+        <div class="tip-item">
+            <div class="tip-number">1</div>
+            <div class="tip-content">
+                <h4 class="tip-title">Be Specific</h4>
+                <p class="tip-text">Use specific keywords like "Italian restaurants" instead of just "restaurants"</p>
+            </div>
+        </div>
+        <div class="tip-item">
+            <div class="tip-number">2</div>
+            <div class="tip-content">
+                <h4 class="tip-title">Choose Target Area</h4>
+                <p class="tip-text">
+                    Narrow your location to city level for the most targeted results. Wider scopes generate more leads but take longer.
+                </p>
+            </div>
+        </div>
+        <div class="tip-item">
+            <div class="tip-number">3</div>
+            <div class="tip-content">
+                <h4 class="tip-title">Start Small</h4>
+                <p class="tip-text">
+                    Start with 20-50 leads to test quality for a new niche before requesting larger batches.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        let pollingInterval = null;
+        let jobFinished = false;
+
+        // Confirmation modal before submitting
+        const generateModal = new bootstrap.Modal(document.getElementById('generateConfirmModal'));
+        let formSubmitConfirmed = false;
+
+        document.getElementById('generateLeadsForm').addEventListener('submit', function (e) {
+            if (formSubmitConfirmed) {
+                formSubmitConfirmed = false;
+                return;
+            }
+            e.preventDefault();
+
+            const leads = document.querySelector('input[name="reqLeads"]').value;
+            const niche = document.querySelector('#nicheSelect option:checked')?.text || 'selected niche';
+            const country = document.querySelector('#countrySelect option:checked')?.text || '';
+            const state = document.querySelector('#stateSelect option:checked')?.text || '';
+            const city = document.querySelector('#citySelect option:checked')?.text || '';
+            const location = [city, state, country].filter(x => x && x !== 'Select country' && x !== 'Type to search states...' && x !== 'Type to search cities...').join(', ');
+
+            document.getElementById('generateConfirmText').textContent =
+                `You are about to generate ${leads} leads for "${niche}" in ${location}.`;
+            document.getElementById('generateConfirmQuota').textContent =
+                `This will use ${leads} of your monthly quota.`;
+
+            generateModal.show();
+        });
+
+        document.getElementById('generateConfirmOk').addEventListener('click', function () {
+            generateModal.hide();
+            formSubmitConfirmed = true;
+            document.getElementById('generateLeadsForm').submit();
+        });
+
+        // On page load: check for active job and restore button state
+        (async () => {
+            try {
+                const res = await fetch('/Leads/GetJobStatus');
+                const data = await res.json();
+                if (data.hasActiveJob) {
+                    lockButton(data.newLeads);
+                    startPolling();
+                }
+            } catch {
+                // no active job or network error
+            }
+        })();
+
+        function startPolling() {
+            if (pollingInterval) clearInterval(pollingInterval);
+            jobFinished = false;
+
+            pollingInterval = setInterval(async () => {
+                if (jobFinished) return;
+
+                try {
+                    const res = await fetch('/Leads/GetJobStatus');
+                    const data = await res.json();
+
+                    if (data.hasActiveJob) {
+                        lockButton(data.newLeads);
+                        return;
+                    }
+
+                    // Job is done
+                    jobFinished = true;
+                    stopPolling();
+
+                    if (data.status === 'succeeded') {
+                        iziToast.success({
+                            title: 'Success',
+                            message: `Lead generation complete! ${data.newLeads} new leads added.`,
+                            position: 'topCenter',
+                            timeout: 6000
+                        });
+                    } else if (data.status === 'failed') {
+                        iziToast.error({
+                            title: 'Error',
+                            message: 'Lead generation failed. Please try again.',
+                            position: 'topCenter',
+                            timeout: 6000
+                        });
+                    } else if (data.status !== 'none') {
+                        iziToast.warning({
+                            title: 'Warning',
+                            message: 'Lead generation stopped unexpectedly.',
+                            position: 'topCenter',
+                            timeout: 6000
+                        });
+                    }
+
+                    unlockButton();
+
+                } catch {
+                    // silently ignore transient network blips
+                }
+            }, 10000);
+        }
+
+        function stopPolling() {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+                pollingInterval = null;
+            }
+        }
+
+        function lockButton(leadCount) {
+            const btn = document.getElementById('gmGenerateBtn');
+            if (!btn) return;
+            btn.disabled = true;
+            btn.innerHTML = `
+                <span class="btn-icon"><i class="bi bi-hourglass-split"></i></span>
+                <span class="btn-text">Generating... (${leadCount} leads found)</span>
+                <span class="btn-shimmer"></span>`;
+        }
+
+        function unlockButton() {
+            const btn = document.getElementById('gmGenerateBtn');
+            if (!btn) return;
+            btn.disabled = false;
+            btn.innerHTML = `
+                <span class="btn-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+                <span class="btn-text">Generate Leads Now</span>
+                <span class="btn-shimmer"></span>`;
+        }
+    });
+</script>

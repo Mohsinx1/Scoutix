@@ -1,0 +1,530 @@
+﻿@using Scoutix.Models.ViewModels
+@model IList<LeadListItemViewModel>
+@using Scoutix.Models
+@using Scoutix.Models.Enums
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    ViewData["Title"] = "Manage Leads";
+    Layout = "_UserLayout";
+    var statusFilter = ViewBag.StatusFilter as LeadStatus?;
+    var statuses = ViewBag.Statuses as List<LeadStatus>;
+    var niches = ViewBag.Niches as List<string>;
+    int? selectedCountryId = ViewBag.SelectedCountryId as int?;
+    int? selectedStateId = ViewBag.SelectedStateId as int?;
+    int? selectedCityId = ViewBag.SelectedCityId as int?;
+    int? SelectedNicheId = ViewBag.SelectedNicheId as int?;
+    string search = ViewBag.Search as string ?? "";
+    string hasWebsite = ViewBag.HasWebsite as string ?? "";
+    var antiforgeryToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
+}
+<!-- Page Header -->
+<div class="page-header">
+    <div class="page-header-content">
+        <div class="page-title-section">
+            <h1 class="page-title">
+                <i class="bi bi-people-fill me-2"></i>
+                Leads
+            </h1>
+            <p class="page-description">
+                Manage, filter, and track your business prospects in one place.
+            </p>
+        </div>
+        <div class="page-actions">
+            <div class="leads-counter">
+                <span class="counter-number">@Model.Count</span>
+                <span class="counter-label">Total Lead@(Model.Count == 1 ? "" : "s")</span>
+            </div>
+
+            @if (ViewBag.CanExport == true)
+            {
+                <button type="button" class="btn-export-csv" data-bs-toggle="modal" data-bs-target="#exportConfirmModal">
+                    <i class="bi bi-download me-2"></i>
+                    Export CSV
+                </button>
+            }
+            else if (ViewBag.CanExport == false && ViewBag.ExportLockedReason != null)
+            {
+                <span class="btn-export-csv-locked" title="@ViewBag.ExportLockedReason">
+                    <i class="bi bi-lock-fill me-2"></i>
+                    Export CSV
+                </span>
+            }
+
+            <a asp-action="GenerateLeads" asp-controller="Leads" class="btn-generate-leads">
+                <i class="bi bi-lightning-charge-fill me-2"></i>
+                Generate New Leads
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Filters Card -->
+<div class="filters-card">
+    <div class="filters-header">
+        <h3 class="filters-title">
+            <i class="bi bi-funnel-fill me-2"></i>
+            Filters
+        </h3>
+        @if (ViewBag.CanUseAdvancedFilters == false)
+        {
+            <span class="filters-upgrade-note">
+                <i class="bi bi-lock-fill me-1"></i>
+                Advanced filters available on Growth plan.
+                <a href="/Leads/Settings">Upgrade →</a>
+            </span>
+        }
+    </div>
+    <div class="filters-body">
+        <form asp-action="ManageLeads"
+              asp-controller="Leads"
+              method="get"
+              class="filters-form">
+
+            <div class="filters-row">
+                <!-- Country Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Country</label>
+                    @if (ViewBag.CanUseAdvancedFilters == true)
+                    {
+                        <select id="countrySelect"
+                                name="countryId"
+                                class="filter-select tom-select"
+                                data-selected="@(selectedCountryId?.ToString() ?? "")">
+                            <option value="">All Countries</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <div class="filter-locked">
+                            <i class="bi bi-lock-fill"></i>
+                            <span>Growth+ only</span>
+                        </div>
+                    }
+                </div>
+
+                <!-- State Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">State / Region</label>
+                    @if (ViewBag.CanUseAdvancedFilters == true)
+                    {
+                        <select id="stateSelect"
+                                name="stateId"
+                                class="filter-select tom-select"
+                                data-selected="@(selectedStateId?.ToString() ?? "")">
+                            <option value="">All States</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <div class="filter-locked">
+                            <i class="bi bi-lock-fill"></i>
+                            <span>Growth+ only</span>
+                        </div>
+                    }
+                </div>
+
+                <!-- City Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">City</label>
+                    @if (ViewBag.CanUseAdvancedFilters == true)
+                    {
+                        <select id="citySelect"
+                                name="cityId"
+                                class="filter-select tom-select"
+                                data-selected="@(selectedCityId?.ToString() ?? "")">
+                            <option value="">All Cities</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <div class="filter-locked">
+                            <i class="bi bi-lock-fill"></i>
+                            <span>Growth+ only</span>
+                        </div>
+                    }
+                </div>
+
+            </div>
+
+            <!-- Row 2: Niche, Website, Status -->
+            <div class="filters-row">
+                <!-- Niche Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Niche</label>
+                    @if (ViewBag.CanUseAdvancedFilters == true)
+                    {
+                        <select id="nicheSelect"
+                                name="nicheId"
+                                class="filter-select tom-select"
+                                data-selected="@(SelectedNicheId?.ToString() ?? "")">
+                            <option value="">All Niches</option>
+                        </select>
+                    }
+                    else
+                    {
+                        <div class="filter-locked">
+                            <i class="bi bi-lock-fill"></i>
+                            <span>Growth+ only</span>
+                        </div>
+                    }
+                </div>
+
+                <!-- Website Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Website</label>
+                    <select name="hasWebsite" class="filter-select ts-simple">
+                        <option value="">All Leads</option>
+                        <option value="yes" selected="@(hasWebsite == "yes")">Has Website</option>
+                        <option value="no" selected="@(hasWebsite == "no")">No Website</option>
+                    </select>
+                </div>
+
+                <!-- Status Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                    <select name="statusFilter" class="filter-select ts-simple">
+                        <option value="">All Statuses</option>
+                        @if (statuses != null)
+                        {
+                            foreach (var s in statuses)
+                            {
+                                var isSelected = statusFilter.HasValue && statusFilter.Value == s;
+                                <option value="@s" selected="@(isSelected)">
+                                    @s.ToString().Replace("_", " ")
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="filters-actions">
+                <!-- Search — all plans -->
+                <div class="search-group">
+                    <label class="filter-label">Search</label>
+                    <div class="search-input-wrapper">
+                        <i class="bi bi-search search-icon"></i>
+                        <input type="text"
+                               name="search"
+                               value="@search"
+                               class="search-input"
+                               placeholder="Search by name or phone..." />
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="filter-buttons">
+                    <button type="submit" class="btn-filter-apply">
+                        <i class="bi bi-check-circle me-1"></i>
+                        Apply Filters
+                    </button>
+                    <button type="submit" name="clear" value="1" class="btn-filter-reset">
+                        <i class="bi bi-x-circle me-1"></i>
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Leads Table or Empty State -->
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <div class="empty-state-icon">
+            <i class="bi bi-inbox"></i>
+        </div>
+        <h3 class="empty-state-title">No leads found</h3>
+        <p class="empty-state-description">
+            No leads match your current filters. Try adjusting your filters or generate new leads to get started.
+        </p>
+        <a asp-action="GenerateLeads" asp-controller="Leads" class="btn-empty-action">
+            <i class="bi bi-lightning-charge-fill me-2"></i>
+            Generate New Leads
+        </a>
+    </div>
+}
+else
+{
+    <div class="leads-table-card">
+        <div class="table-responsive">
+            <table class="leads-table" id="leadsTable">
+                <thead class="table-header">
+                    <tr>
+                        <th class="th-check">
+                            <input type="checkbox" id="selectAll" title="Select all" />
+                        </th>
+                        <th class="th-serial">
+                            #
+                        </th>
+
+                        <th class="th-lead">
+                            <i class="bi bi-person me-1"></i>Lead
+                        </th>
+                        <th class="th-contact">
+                            <!-- <i class="bi bi-telephone me-1"></i>-->Contact
+                        </th>
+                        <th class="th-email">
+                            <i class="bi bi-envelope me-1"></i>Email
+                        </th>
+                        <th class="th-owner">
+                            <i class="bi bi-person-badge me-1"></i>Owner
+                        </th>
+                        <th class="th-location">
+                            <i class="bi bi-geo-alt me-1"></i>Location
+                        </th>
+                        <th class="th-niche">
+                            <i class="bi bi-tag me-1"></i>Niche
+                        </th>
+                        <th class="th-date">
+                            <!-- <i class="bi bi-calendar me-1"></i> -->Added
+                        </th>
+                        <th class="th-status">
+                            <i class="bi bi-flag me-1"></i>Status
+                        </th>
+                        <th class="th-actions">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                    @{
+                        var serial = 1;
+                    }
+
+                    @foreach (var lead in Model)
+                    {
+                        <tr class="lead-row" data-lead-id="@lead.Id" data-enrichment-status="@lead.EnrichmentStatus" data-has-website="@(!string.IsNullOrWhiteSpace(lead.Website) ? "true" : "false")">
+                            <td class="td-check">
+                                <input type="checkbox" class="lead-checkbox" value="@lead.Id" onchange="onCheckboxChange()" />
+                            </td>
+                            <td class="td-serial">
+                            </td>
+
+                            <!-- Lead Name -->
+                            <td class="td-lead">
+                                <div class="lead-info">
+                                    <!-- <div class="lead-avatar">
+                                        @(!string.IsNullOrWhiteSpace(lead.Name) ? lead.Name.Substring(0, 1).ToUpper() : "?")
+                                     </div>-->
+                                    <div class="lead-name">
+                                        @(!string.IsNullOrWhiteSpace(lead.Name) ? lead.Name : "Unnamed Lead")
+                                    </div>
+                                </div>
+                            </td>
+
+                            <!-- Contact -->
+                            <td class="td-contact">
+                                @if (!string.IsNullOrWhiteSpace(lead.Phone))
+                                {
+                                    <div class="contact-info">
+                                        <div class="contact-phone-row">
+                                            <span class="contact-phone">@lead.Phone</span>
+                                            <button class="btn-copy-email" onclick="copyPhone('@lead.Phone', this)" title="Copy phone">
+                                                <i class="bi bi-copy"></i>
+                                            </button>
+                                        </div>
+                                        <a href="tel:@lead.Phone" class="contact-call-link">
+                                            <i class="bi bi-telephone-fill me-1"></i>Call
+                                        </a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="text-no-data">No phone</span>
+                                }
+                            </td>
+
+                            <!-- Email / Enrich -->
+                            <td class="td-email" id="enrich-cell-@lead.Id">
+                                @{
+                                    var es = (Scoutix.Models.Enums.EnrichmentStatus)lead.EnrichmentStatus;
+                                }
+                                @if (es == Scoutix.Models.Enums.EnrichmentStatus.Completed && !string.IsNullOrWhiteSpace(lead.Email))
+                                {
+                                    <div class="enrich-done">
+                                        <i class="bi bi-check-circle-fill enrich-icon-done me-1"></i>
+                                        <a href="mailto:@lead.Email" class="enrich-email-link">@lead.Email</a>
+                                        <button class="btn-copy-email" onclick="copyEmail('@lead.Email', this)" title="Copy email">
+                                            <i class="bi bi-copy"></i>
+                                        </button>
+                                        @{
+                                            var emClass = lead.EmailStatus == 1 ? "email-verified" : lead.EmailStatus == 2 ? "email-catchall" : "email-web";
+                                            var emLabel = lead.EmailStatus == 1 ? "verified" : lead.EmailStatus == 2 ? "catch-all" : "from website";
+                                        }
+                                        <span class="email-tag @emClass">@emLabel</span>
+                                    </div>
+                                }
+                                else if (es == Scoutix.Models.Enums.EnrichmentStatus.Pending)
+                                {
+                                    <span class="enrich-pending">
+                                        <i class="bi bi-arrow-repeat enrich-spin me-1"></i>Finding...
+                                    </span>
+                                }
+                                else if (es == Scoutix.Models.Enums.EnrichmentStatus.NoEmailFound)
+                                {
+                                    <span class="enrich-badge-none">No email found</span>
+                                }
+                                else if (es == Scoutix.Models.Enums.EnrichmentStatus.Failed && lead.EnrichmentAttempts < 3)
+                                {
+                                    <button class="btn-enrich" onclick="enrichLead(@lead.Id, this)">
+                                        <i class="bi bi-arrow-clockwise me-1"></i>Retry
+                                    </button>
+                                }
+                                else if (string.IsNullOrWhiteSpace(lead.Website))
+                                {
+                                    <span class="enrich-badge-none">No website</span>
+                                }
+                                else
+                                {
+                                    <button class="btn-enrich" onclick="enrichLead(@lead.Id, this)">
+                                        <i class="bi bi-envelope me-1"></i>Enrich
+                                    </button>
+                                }
+                            </td>
+
+                            <!-- Owner -->
+                            <td class="td-owner" id="owner-cell-@lead.Id">
+                                @if (!string.IsNullOrWhiteSpace(lead.OwnerName))
+                                {
+                                    <div class="owner-info">
+                                        <span class="owner-name">@lead.OwnerName</span>
+                                        @if (lead.OwnerVerified)
+                                        {
+                                            <span class="owner-verified" title="Confirmed by 2+ independent sources"><i class="bi bi-patch-check-fill"></i></span>
+                                        }
+                                    </div>
+                                }
+                                else if (es == Scoutix.Models.Enums.EnrichmentStatus.Pending)
+                                {
+                                    <span class="enrich-pending"><i class="bi bi-arrow-repeat enrich-spin"></i></span>
+                                }
+                                else
+                                {
+                                    <span class="text-no-data">—</span>
+                                }
+                            </td>
+
+                            <!-- Location -->
+                            <td class="td-location">
+                                <div class="location-text">
+                                    @(string.Join(", ", new[] { lead.CityName, lead.StateName, lead.CountryName }.Where(x => !string.IsNullOrWhiteSpace(x))))
+                                </div>
+                            </td>
+
+                            <!-- Niche -->
+                            <td class="td-niche">
+                                <span class="niche-badge">@lead.Niche</span>
+                            </td>
+
+                            <!-- Created Date -->
+                            <td class="td-date">
+                                <span class="date-text">@lead.CreatedAt.ToString("MMM dd")</span>
+                            </td>
+
+                            <!-- Status -->
+                            <td class="td-status">
+                                <div class="status-dropdown dropdown">
+                                    <button type="button"
+                                            class="status-badge status-@lead.Status.ToString().ToLower().Replace("_", "-") dropdown-toggle"
+                                            data-bs-toggle="dropdown"
+                                            aria-expanded="false">
+                                        <i class="bi bi-circle-fill status-dot me-1"></i>
+                                        @lead.Status.ToString().Replace("_", " ")
+                                    </button>
+                                    <ul class="dropdown-menu status-menu">
+                                        @foreach (LeadStatus status in Enum.GetValues(typeof(LeadStatus)))
+                                        {
+                                            if (status != lead.Status)
+                                            {
+                                                <li>
+                                                    <button class="dropdown-item status-option"
+                                                            onclick="openStatusNotes(@lead.Id, '@status')">
+                                                        <i class="bi bi-circle-fill status-dot-small me-2"></i>
+                                                        @status.ToString().Replace("_", " ")
+                                                    </button>
+                                                </li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </td>
+
+                            <!-- Actions -->
+                            <td class="td-actions">
+                                <button type="button"
+                                        class="btn-view-details"
+                                        data-lead-id="@lead.Id">
+                                    <i class="bi bi-eye me-1"></i>
+                                    Details
+                                </button>
+                            </td>
+                        </tr>
+                        serial++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+<div class="modal fade" id="exportConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content export-modal-content">
+            <div class="modal-header export-modal-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div class="export-modal-icon">
+                        <i class="bi bi-download"></i>
+                    </div>
+                    <h5 class="modal-title" style="font-weight: 700; color: var(--text-dark); margin: 0;">Export Your Leads</h5>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body export-modal-body">
+                <p style="color: var(--text-gray); font-size: 0.9375rem; margin-bottom: 1rem;">
+                    You are about to download all your leads as a CSV file including business name, phone, website, address, status and notes.
+                </p>
+                <div class="export-modal-warning">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span>
+                        You can only export once every 24 hours. After exporting you will need to wait before exporting again.
+                    </span>
+                </div>
+            </div>
+            <div class="modal-footer export-modal-footer">
+                <button type="button"
+                        class="btn-modal-cancel"
+                        data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <a href="/Leads/ExportCsv" class="btn-generate-leads" style="text-decoration: none; padding: 0.75rem 1.5rem; font-size: 0.9rem;">
+                    <i class="bi bi-download me-2"></i>
+                    Export Now
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hidden Antiforgery Token -->
+<input type="hidden" id="gmRequestVerificationToken" value="@antiforgeryToken" />
+
+<!-- Floating action bar — visible whenever ≥1 lead is checked, stays on screen while scrolling -->
+<div id="enrichFloatingBar" class="enrich-floating-bar" style="display:none;">
+    <span class="enrich-floating-info">
+        <i class="bi bi-check2-square enrich-floating-icon"></i>
+        <span id="floatingSelectedText">0 leads selected</span>
+    </span>
+    <div class="enrich-floating-actions">
+        <button class="enrich-floating-deselect" onclick="deselectAll()" title="Clear selection">
+            <i class="bi bi-x-lg"></i>
+        </button>
+        <button class="btn-enrich-bulk" onclick="enrichSelected()">
+            <i class="bi bi-envelope-fill me-2"></i>
+            Enrich Selected
+        </button>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/enrichment.js" asp-append-version="true"></script>
+}
+
+

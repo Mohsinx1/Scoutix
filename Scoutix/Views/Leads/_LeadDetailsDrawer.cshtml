@@ -1,0 +1,213 @@
+﻿@using Scoutix.Models.Enums
+@model Scoutix.Models.ViewModels.LeadDetailsViewModel
+
+<!-- Lead Header -->
+<div class="lead-drawer-header">
+    <div class="lead-identity">
+     @*    <div class="lead-avatar-large">
+            @(!string.IsNullOrWhiteSpace(Model.Name) ? Model.Name.Substring(0, 1).ToUpper() : "?")
+        </div> *@
+        <div class="lead-info-header">
+            <h3 class="lead-drawer-name">
+                @(!string.IsNullOrWhiteSpace(Model.Name) ? Model.Name : "Unnamed Business")
+            </h3>
+            @if (!string.IsNullOrWhiteSpace(Model.Niche))
+            {
+                <div class="lead-drawer-niche">
+                    <i class="bi bi-tag-fill me-1"></i>
+                    @Model.Niche
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Contact Information -->
+<div class="drawer-section">
+    <div class="section-header">
+        <i class="bi bi-telephone-fill section-icon"></i>
+        <h4 class="section-title">Contact Information</h4>
+    </div>
+    <div class="section-content">
+        @if (!string.IsNullOrWhiteSpace(Model.Phone))
+        {
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="bi bi-telephone"></i>
+                    <span>Phone</span>
+                </div>
+                <div class="info-value">
+                    <a href="tel:@Model.Phone" class="contact-link phone-link">
+                        @Model.Phone
+                    </a>
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Email))
+        {
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="bi bi-envelope"></i>
+                    <span>Email</span>
+                </div>
+                <div class="info-value">
+                    <a href="mailto:@Model.Email" class="contact-link email-link">
+                        @Model.Email
+                    </a>
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Website))
+        {
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="bi bi-globe"></i>
+                    <span>Website</span>
+                </div>
+                <div class="info-value">
+                    <a href="@Model.Website" target="_blank" class="contact-link website-link">
+                        @Model.Website
+                        <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </a>
+                </div>
+            </div>
+        }
+
+        @if (!string.IsNullOrWhiteSpace(Model.Address))
+        {
+            <div class="info-item">
+                <div class="info-label">
+                    <i class="bi bi-map-fill"></i>
+                    <span>Address</span>
+                </div>
+                <div class="info-value">@Model.Address</div>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Business Information -->
+<div class="drawer-section">
+    <div class="section-header">
+        <i class="bi bi-building section-icon"></i>
+        <h4 class="section-title">Business Details</h4>
+    </div>
+    <div class="section-content">
+        <div class="info-item">
+            <div class="info-label">
+                <i class="bi bi-tag"></i>
+                <span>Industry</span>
+            </div>
+            <div class="info-value">
+                <span class="niche-badge-drawer">@Model.Niche</span>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <div class="info-label">
+                <i class="bi bi-geo-alt"></i>
+                <span>Location</span>
+            </div>
+            <div class="info-value location-text">
+                @string.Join(", ", new[] { Model.CityName, Model.StateName, Model.CountryName }.Where(x => !string.IsNullOrWhiteSpace(x)))
+            </div>
+        </div>
+
+       @*  <div class="info-item">
+            <div class="info-label">
+                <i class="bi bi-database"></i>
+                <span>Source</span>
+            </div>
+            <div class="info-value">
+                <span class="source-badge">@Model.Source</span>
+            </div>
+        </div> *@
+    </div>
+</div>
+
+<!-- Status Section -->
+<div class="drawer-section">
+    <div class="section-header">
+        <i class="bi bi-flag-fill section-icon"></i>
+        <h4 class="section-title">Lead Status</h4>
+    </div>
+    <div class="section-content">
+        <div class="status-selector-wrapper">
+            <div class="dropdown w-100">
+                <button type="button"
+                        class="status-badge-large status-@Model.Status.ToString().ToLower().Replace("_", "-") dropdown-toggle"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    <i class="bi bi-circle-fill status-dot me-2"></i>
+                    <span class="status-text">@Model.Status.ToString().Replace("_", " ")</span>
+                    <i class="bi bi-chevron-down ms-auto"></i>
+                </button>
+                <ul class="dropdown-menu status-dropdown-menu w-100">
+                    @foreach (LeadStatus status in Enum.GetValues(typeof(LeadStatus)))
+                    {
+                        if (status != Model.Status)
+                        {
+                            <li>
+                                <button class="dropdown-item status-dropdown-item"
+                                        onclick="openStatusNotes(@Model.Id, '@status')">
+                                    <i class="bi bi-circle-fill status-dot-small me-2"></i>
+                                    @status.ToString().Replace("_", " ")
+                                </button>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            <p class="status-helper-text">
+                <i class="bi bi-info-circle me-1"></i>
+                Click to change lead status
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Notes Section -->
+<div class="drawer-section">
+    <div class="section-header">
+        <i class="bi bi-journal-text section-icon"></i>
+        <h4 class="section-title">Notes & Activity</h4>
+    </div>
+    <div class="section-content">
+        @if (!string.IsNullOrWhiteSpace(Model.Notes))
+        {
+            <div class="notes-content">
+                <div class="note-item">
+                    <div class="note-icon">
+                        <i class="bi bi-sticky-fill"></i>
+                    </div>
+                    <div class="note-text">@Model.Notes</div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="empty-notes">
+                <i class="bi bi-journal-x"></i>
+                <p>No notes added yet</p>
+                <small>Change the lead status to add notes and track activity</small>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- Metadata Footer -->
+<div class="drawer-footer-meta">
+    <div class="meta-item">
+        <i class="bi bi-calendar-plus me-1"></i>
+        <span>Added to your account: @Model.CreatedAt.ToString("MMM dd, yyyy")</span>
+    </div>
+    @if (Model.UpdatedAt.HasValue)
+    {
+        <div class="meta-item">
+            <i class="bi bi-clock-history me-1"></i>
+            <span>Last updated: @Model.UpdatedAt.Value.ToString("MMM dd, yyyy")</span>
+        </div>
+    }
+</div>

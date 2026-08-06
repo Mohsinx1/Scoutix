@@ -1,0 +1,94 @@
+﻿@model LoginViewModel
+
+@{
+    Layout = "_VisitorLayout";
+    ViewData["Title"] = "Login";
+}
+
+<!-- Login Section -->
+<section class="auth-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-7">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <img src="~/images/logo.png" alt="Scoutix" style="height: 48px; vertical-align: middle;" />
+
+                        <h2 class="auth-title">Welcome back</h2>
+                        <p class="auth-description">Sign in to your Scoutix account</p>
+                    </div>
+
+                    <form id="loginForm" class="auth-form" method="post" asp-action="Login" asp-controller="Account">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <div class="form-group">
+                            <label asp-for="Email" class="form-label">Email Address</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-envelope-fill"></i>
+                                <input asp-for="Email" class="form-control" placeholder="you@example.com" required>
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="Password" class="form-label">Password</label>
+                            <div class="input-with-icon">
+                                <i class="bi bi-lock-fill"></i>
+                                <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" required>
+                                <button type="button" class="toggle-password" onclick="togglePassword('Password')">
+                                    <i class="bi bi-eye-fill"></i>
+                                </button>
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+                            <label class="checkbox-container">
+                                <input asp-for="RememberMe" type="checkbox">
+                                <span class="checkmark"></span>
+                                <span class="checkbox-label">Remember me</span>
+                            </label>
+                            <a href="/Account/ForgotPassword" class="forgot-password-link">Forgot password?</a>
+                        </div>
+
+                        <button type="submit" class="btn-auth-primary">
+                            Sign In
+                            <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
+
+                        <div class="auth-divider">
+                            <span>or</span>
+                        </div>
+
+                        <div class="auth-alternative">
+                            Don't have an account? <a href="/Account/SignUp">Create one</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="auth-security">
+                    <i class="bi bi-shield-check"></i>
+                    <span>Your data is secure and encrypted</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const button = event.currentTarget;
+        const icon = button.querySelector('i');
+
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.remove('bi-eye-fill');
+            icon.classList.add('bi-eye-slash-fill');
+        } else {
+            input.type = 'password';
+            icon.classList.remove('bi-eye-slash-fill');
+            icon.classList.add('bi-eye-fill');
+        }
+    }
+</script>
